@@ -78,7 +78,7 @@ public class Carte implements ICarte, IConfig {
 	@Override
 	public void mort(Soldat perso) {
 		//on retire le soldat de sa position dans le tableau
-		carte[perso.getPosition.getX()][perso.getPosition.getY()] = null;
+		carte[perso.getPosition().getX()][perso.getPosition().getY()] = null;
 		//on met son pointeur à null
 		perso = null;
 	}
