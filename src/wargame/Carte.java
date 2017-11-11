@@ -58,13 +58,20 @@ public class Carte implements ICarte, IConfig {
 
 	@Override
 	public Heros trouveHeros(Position pos) {
-		// TODO Auto-generated method stub
+		int x = pos.getX();
+		int y = pos.getY();
+		for (int i = x - 1; i <= x + 1; i++) {
+			for (int j = y - 1; j <= y + 1; j++) {
+				if ((i != x && j != y) && (carte[i][j] instanceof Heros ))
+					return (Heros)carte[i][j];
+			}
+		}
 		return null;
+		
 	}
 
 	@Override
 	public boolean deplaceSoldat(Position pos, Soldat soldat) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
