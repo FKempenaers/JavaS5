@@ -72,6 +72,19 @@ public class Carte implements ICarte, IConfig {
 
 	@Override
 	public boolean deplaceSoldat(Position pos, Soldat soldat) {
+		int x = pos.getX();
+		int y = pos.getY();
+		int i,j;
+		if(carte[x][y] == null && x < LARGEUR_CARTE && y < HAUTEUR_CARTE) {
+			for (i = x - 1; i <= x + 1; i++) {
+				for (j = y - 1; j <= y + 1; j++) {
+					if ((i != x && j != y) && (carte[i][j] instanceof Heros )) {
+						soldat.setPosition(pos);
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 
