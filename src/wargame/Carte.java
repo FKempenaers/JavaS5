@@ -44,8 +44,16 @@ public class Carte implements ICarte, IConfig {
 
 	@Override
 	public Heros trouveHeros() {
-		// TODO Auto-generated method stub
-		return null;
+		int x, y;
+		x = y = 0;
+		Random r = new Random();
+		Element e;
+		do {
+			x = r.nextInt(LARGEUR_CARTE+1);
+			y = r.nextInt(HAUTEUR_CARTE+1);
+			e = carte[x][y];
+		} while (!(e instanceof Heros));
+		return (Heros)e;
 	}
 
 	@Override
