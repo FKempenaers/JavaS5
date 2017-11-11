@@ -22,8 +22,8 @@ public class Carte implements ICarte, IConfig {
 		Random r = new Random();
 		Element e;
 		do {
-			x = r.nextInt(LARGEUR_CARTE);
-			y = r.nextInt(HAUTEUR_CARTE);
+			x = r.nextInt(LARGEUR_CARTE+1);
+			y = r.nextInt(HAUTEUR_CARTE+1);
 			e = carte[x][y];
 		} while (e != null);
 		return new Position(x, y);
@@ -31,7 +31,14 @@ public class Carte implements ICarte, IConfig {
 
 	@Override
 	public Position trouvePositionVide(Position pos) {
-		// TODO Auto-generated method stub
+		int x = pos.getX();
+		int y = pos.getY();
+		for (int i = x - 1; i <= x + 1; i++) {
+			for (int j = y - 1; j <= y + 1; j++) {
+				if ((i != x && j != y) && (carte[i][j] == null))
+					return new Position(i, j);
+			}
+		}
 		return null;
 	}
 
