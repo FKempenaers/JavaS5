@@ -22,6 +22,7 @@ public abstract class Soldat extends Element implements ISoldat {
 	public void setPosition(Position pos) {
 		pos = new Position(pos.getX(),pos.getY());
 	}
+	
 	public int getPoints() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -49,5 +50,4 @@ public abstract class Soldat extends Element implements ISoldat {
 		// TODO Auto-generated method stub
 		
 	}
-	
 }
