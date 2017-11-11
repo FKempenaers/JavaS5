@@ -44,6 +44,10 @@ public class Carte implements ICarte, IConfig {
 
 	@Override
 	public Heros trouveHeros() {
+		Element e = carte[0][0];
+		if(e instanceof Heros) {
+			
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
