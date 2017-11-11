@@ -1,18 +1,32 @@
 package wargame;
 
 import java.awt.Graphics;
+import java.util.Random;
 
-public class Carte implements ICarte{
-
+public class Carte implements ICarte, IConfig{
+	private Element[][] carte;
+	
+	public Carte() {
+	this.carte = new Element[LARGEUR_CARTE][HAUTEUR_CARTE];
+	}
+	
 	@Override
 	public Element getElement(Position pos) {
-		// TODO Auto-generated method stub
-		return null;
+		return carte[pos.getX()][pos.getY()];
 	}
 
 	@Override
 	public Position trouvePositionVide() {
-		return null;
+		int x,y;
+		x = y = 0;
+		Random r = new Random();
+		Element e = null;
+		while(e == null) {
+			x = r.nextInt(LARGEUR_CARTE);
+			y = r.nextInt(HAUTEUR_CARTE);
+			e = carte[x][y];		
+		}
+		return new Position(x,y);
 	}
 
 	@Override
