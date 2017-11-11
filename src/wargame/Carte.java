@@ -33,8 +33,8 @@ public class Carte implements ICarte, IConfig {
 	public Position trouvePositionVide(Position pos) {
 		int x = pos.getX();
 		int y = pos.getY();
-		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y - 1; j <= y + 1; j++) {
+		for (int i = x - 1; (i <= x + 1)&&(i<LARGEUR_CARTE); i++) {
+			for (int j = y - 1; (j <= y + 1)&&(j<HAUTEUR_CARTE); j++) {
 				if ((i != x && j != y) && (carte[i][j] == null))
 					return new Position(i, j);
 			}
@@ -44,12 +44,16 @@ public class Carte implements ICarte, IConfig {
 
 	@Override
 	public Heros trouveHeros() {
-		Element e = carte[0][0];
-		if(e instanceof Heros) {
-			
-		}
-		// TODO Auto-generated method stub
-		return null;
+		int x, y;
+		x = y = 0;
+		Random r = new Random();
+		Element e;
+		do {
+			x = r.nextInt(LARGEUR_CARTE+1);
+			y = r.nextInt(HAUTEUR_CARTE+1);
+			e = carte[x][y];
+		} while (!(e instanceof Heros));
+		return (Heros)e;
 	}
 
 	@Override
