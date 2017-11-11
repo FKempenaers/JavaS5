@@ -33,8 +33,8 @@ public class Carte implements ICarte, IConfig {
 	public Position trouvePositionVide(Position pos) {
 		int x = pos.getX();
 		int y = pos.getY();
-		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y - 1; j <= y + 1; j++) {
+		for (int i = x - 1; (i <= x + 1)&&(i<LARGEUR_CARTE); i++) {
+			for (int j = y - 1; (j <= y + 1)&&(j<HAUTEUR_CARTE); j++) {
 				if ((i != x && j != y) && (carte[i][j] == null))
 					return new Position(i, j);
 			}
@@ -60,8 +60,8 @@ public class Carte implements ICarte, IConfig {
 	public Heros trouveHeros(Position pos) {
 		int x = pos.getX();
 		int y = pos.getY();
-		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y - 1; j <= y + 1; j++) {
+		for (int i = x - 1; (i <= x + 1)&&(i<LARGEUR_CARTE); i++) {
+			for (int j = y - 1; (j <= y + 1)&&(j<HAUTEUR_CARTE); j++) {
 				if ((i != x && j != y) && (carte[i][j] instanceof Heros ))
 					return (Heros)carte[i][j];
 			}
@@ -90,8 +90,10 @@ public class Carte implements ICarte, IConfig {
 
 	@Override
 	public void mort(Soldat perso) {
-		// TODO Auto-generated method stub
-
+		//on retire le soldat de sa position dans le tableau
+		carte[perso.getPosition.getX()][perso.getPosition.getY()] = null;
+		//on met son pointeur à null
+		perso = null;
 	}
 
 	@Override
