@@ -1,5 +1,6 @@
 package wargame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
@@ -54,7 +55,7 @@ public class Carte implements ICarte, IConfig {
 	}
 
 	@Override
-	/* retourne un Heros trouve aleatoirement sur la carte*/
+	/* retourne un Heros trouve aleatoirement sur la carte */
 	public Heros trouveHeros() {
 		int x, y;
 		x = y = 0;
@@ -69,7 +70,10 @@ public class Carte implements ICarte, IConfig {
 	}
 
 	@Override
-	/* retourne un Heros adjacent a la Position passee en parametre et null s'il n'y en a pas*/
+	/*
+	 * retourne un Heros adjacent a la Position passee en parametre et null s'il n'y
+	 * en a pas
+	 */
 	public Heros trouveHeros(Position pos) {
 		int x = pos.getX();
 		int y = pos.getY();
@@ -124,7 +128,36 @@ public class Carte implements ICarte, IConfig {
 	@Override
 	public void toutDessiner(Graphics g) {
 		// TODO Auto-generated method stub
+		int i, j;
+		for (j = 0; j < HAUTEUR_CARTE; j++) {
+			for (i = 0; i < LARGEUR_CARTE; i++) {
+				/* couleur de la case suivant type d'element */
+				if (carte[i][j] == null) {
+					g.setColor(COULEUR_VIDE);
+					g.fillRect(i, j, NB_PIX_CASE, NB_PIX_CASE);
+				} else {
+					if (carte[i][j] instanceof Heros) {
+						g.setColor(COULEUR_HEROS);
+						g.fillRect(i, j, NB_PIX_CASE, NB_PIX_CASE);
+					}
+					if (carte[i][j] instanceof Monstre)
+						g.setColor(COULEUR_MONSTRES);
+				}
+				/* dessin de la case */
+				// g.fillRect(i, j, NB_PIX_CASE, NB_PIX_CASE);
+			}
+		}
+		/* trace de la grille de jeu */
+		g.setColor(Color.DARK_GRAY);
+		for (i = 0; i <= LARGEUR_CARTE; i++)
+			g.drawLine(i * NB_PIX_CASE, 0, i * NB_PIX_CASE, HAUTEUR_CARTE * NB_PIX_CASE);
+		for (j = 0; j <= HAUTEUR_CARTE; j++)
+			g.drawLine(0, j * NB_PIX_CASE, LARGEUR_CARTE * NB_PIX_CASE, j * NB_PIX_CASE);
+	}
 
+	/* Pour test : place un element dans la case passee en param */
+	public void setElement(Element e, int x, int y) {
+		carte[x][y] = e;
 	}
 
 }
