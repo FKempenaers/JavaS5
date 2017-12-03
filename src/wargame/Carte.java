@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
+import wargame.Obstacle.TypeObstacle;
+
 public class Carte implements ICarte, IConfig {
 	private Element[][] carte;
 
@@ -13,8 +15,36 @@ public class Carte implements ICarte, IConfig {
 	 */
 	public Carte() {
 		this.carte = new Element[LARGEUR_CARTE][HAUTEUR_CARTE];
+		initCarte();
 	}
+	
+	public void initCarte() {
+		int heros, monstres, obstacles;
+		Position p;
+		for (int i = 0; i < IConfig.LARGEUR_CARTE; i++) {
+			for (int j = 0; j < IConfig.HAUTEUR_CARTE; j++) {
+				setElement(null,i,j);
+			}
+		}
 
+		for (heros = 0; heros < IConfig.NB_HEROS; heros++) {
+			do {
+				p = trouvePositionVide();
+			} while (p.getX() < LARGEUR_CARTE-5|| p.getY() < HAUTEUR_CARTE-5);
+			setElement(new Heros(this, ISoldat.TypesH.getTypeHAlea(), "HerosAuPif", p), p.getX(), p.getY());
+		}
+		for (monstres = 0; monstres < IConfig.NB_MONSTRES; monstres++) {
+			do {
+				p = trouvePositionVide();
+			} while (p.getX() > 5 || p.getY() > 5);
+			setElement(new Monstre(this, ISoldat.TypesM.getTypeMAlea(), "MonstreAuPif", p), p.getX(), p.getY());
+		}
+		for (obstacles = 0; obstacles < IConfig.NB_OBSTACLES; obstacles++) {
+			p = trouvePositionVide();
+			setElement(new Obstacle(TypeObstacle.getObstacleAlea(), p), p.getX(), p.getY());
+		}
+	}
+	
 	@Override
 	/* retourne l'Element qui est a la Position passee en parametre */
 	public Element getElement(Position pos) {
@@ -27,12 +57,10 @@ public class Carte implements ICarte, IConfig {
 		int x, y;
 		x = y = 0;
 		Random r = new Random();
-		Element e;
 		do {
 			x = r.nextInt(LARGEUR_CARTE);
 			y = r.nextInt(HAUTEUR_CARTE);
-			e = carte[x][y];
-		} while (e != null);
+		} while (carte[x][y] != null);
 		return new Position(x, y);
 	}
 

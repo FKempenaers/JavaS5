@@ -22,7 +22,6 @@ public class FenetreJeu implements IConfig{
 		frame.getContentPane().add(panneau);
 		frame.pack();
 		frame.setVisible(true);
-
 	}
 
 }
