@@ -134,17 +134,16 @@ public class Carte implements ICarte, IConfig {
 				/* couleur de la case suivant type d'element */
 				if (carte[i][j] == null) {
 					g.setColor(COULEUR_VIDE);
-					g.fillRect(i, j, NB_PIX_CASE, NB_PIX_CASE);
 				} else {
-					if (carte[i][j] instanceof Heros) {
+					if (carte[i][j] instanceof Heros)
 						g.setColor(COULEUR_HEROS);
-						g.fillRect(i, j, NB_PIX_CASE, NB_PIX_CASE);
-					}
 					if (carte[i][j] instanceof Monstre)
 						g.setColor(COULEUR_MONSTRES);
+					if(carte[i][j] instanceof Obstacle)
+						g.setColor(((Obstacle)carte[i][j]).getCouleur());
 				}
 				/* dessin de la case */
-				// g.fillRect(i, j, NB_PIX_CASE, NB_PIX_CASE);
+				 g.fillRect(i*NB_PIX_CASE, j*NB_PIX_CASE, NB_PIX_CASE, NB_PIX_CASE);
 			}
 		}
 		/* trace de la grille de jeu */

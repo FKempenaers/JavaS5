@@ -16,7 +16,10 @@ public class Obstacle extends Element implements IConfig {
 		public static TypeObstacle getObstacleAlea() {
 			return values()[(int) (Math.random() * values().length)];
 		}
-	}
+		public Color getCouleur() {
+			return COULEUR;
+		}
+		}
 
 	private TypeObstacle TYPE;
 	private Position pos;
@@ -26,6 +29,10 @@ public class Obstacle extends Element implements IConfig {
 		this.pos = pos;
 	}
 
+	public Color getCouleur() {
+		return TYPE.getCouleur();
+	}
+	
 	public String toString() {
 		return "" + TYPE;
 	}
