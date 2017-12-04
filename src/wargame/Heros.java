@@ -13,7 +13,7 @@ public class Heros extends Soldat{
 		}
 
 
-	public void joueTour(int tour) {
+	public void joueTour() {
 		// TODO Auto-generated method stub
 		
 	}

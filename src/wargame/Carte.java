@@ -166,8 +166,12 @@ public class Carte implements ICarte, IConfig {
 				if (carte[i][j] == null) {
 					g.setColor(COULEUR_VIDE);
 				} else {
-					if (carte[i][j] instanceof Heros)
-						g.setColor(COULEUR_HEROS);
+					if (carte[i][j] instanceof Heros) {
+						if (((Heros) carte[i][j]).getTour())
+							g.setColor(COULEUR_HEROS_DEJA_JOUE);
+						else
+							g.setColor(COULEUR_HEROS);
+					}
 					if (carte[i][j] instanceof Monstre)
 						g.setColor(COULEUR_MONSTRES);
 					if (carte[i][j] instanceof Obstacle)
@@ -188,6 +192,34 @@ public class Carte implements ICarte, IConfig {
 	/* Pour test : place un element dans la case passee en param */
 	public void setElement(Element e, int x, int y) {
 		carte[x][y] = e;
+	}
+
+	public void jouerMonstres() {
+		int i, j;
+		Monstre m;
+		for (i = 0; i < IConfig.LARGEUR_CARTE; i++) {
+			for (j = 0; j < IConfig.HAUTEUR_CARTE; j++) {
+				if (carte[i][j] instanceof Monstre) {
+					m = (Monstre) carte[i][j];
+					if (!m.getTour())
+						m.joueTour();
+				}
+			}
+		}
+
+	}
+
+	public void resetTour() {
+		int i, j;
+		Soldat s;
+		for (i = 0; i < IConfig.LARGEUR_CARTE; i++) {
+			for (j = 0; j < IConfig.HAUTEUR_CARTE; j++) {
+				if (carte[i][j] instanceof Soldat) {
+					s = (Soldat) carte[i][j];
+					s.tour = false;
+				}
+			}
+		}
 	}
 
 }

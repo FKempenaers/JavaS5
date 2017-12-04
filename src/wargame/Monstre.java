@@ -17,7 +17,7 @@ public class Monstre extends Soldat {
 	}
 
 	@Override
-	public int getTour() {
+	public boolean getTour() {
 		return super.getTour();
 	}
 
@@ -27,7 +27,7 @@ public class Monstre extends Soldat {
 	}
 
 	@Override
-	public void joueTour(int tour) {
+	public void joueTour() {
 		Position pos,npos;
 		Heros cible = trouveCible();
 		pos = getPosition();
@@ -41,6 +41,7 @@ public class Monstre extends Soldat {
 			if(cible != null)
 				combat(cible);
 		}
+		super.tours=true;
 	}
 	
 	public Heros trouveCible() {
@@ -67,7 +68,7 @@ public class Monstre extends Soldat {
 
 	@Override
 	public void combat(Soldat soldat) {
-		// TODO Auto-generated method stub
+		super.combat(soldat);
 
 	}
 
@@ -75,5 +76,6 @@ public class Monstre extends Soldat {
 	public void seDeplace(Position newPos) {
 		super.seDeplace(newPos);
 	}
+
 
 }
