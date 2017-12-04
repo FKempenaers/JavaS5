@@ -5,7 +5,7 @@ public abstract class Soldat extends Element implements ISoldat {
 	private final int POINTS_DE_VIE_MAX, PUISSANCE, TIR, PORTEE_VISUELLE;
 	private int pointsDeVie;
 	private Position pos;
-	private Carte carte;
+	protected Carte carte;
 
 	Soldat(Carte carte, int pts, int portee, int puiss, int tir, Position pos) {
 		POINTS_DE_VIE_MAX = pointsDeVie = pts;
@@ -24,20 +24,17 @@ public abstract class Soldat extends Element implements ISoldat {
 	}
 	
 	public int getPoints() {
-		// TODO Auto-generated method stub
-		return 0;
+		return pointsDeVie;
 	}
 
 	@Override
 	public int getTour() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getPortee() {
-		// TODO Auto-generated method stub
-		return 0;
+		return PORTEE_VISUELLE;
 	}
 	@Override
 	public void combat(Soldat soldat) {

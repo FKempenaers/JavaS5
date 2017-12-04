@@ -17,20 +17,20 @@ public class Carte implements ICarte, IConfig {
 		this.carte = new Element[LARGEUR_CARTE][HAUTEUR_CARTE];
 		initCarte();
 	}
-	
+
 	public void initCarte() {
 		int heros, monstres, obstacles;
 		Position p;
 		for (int i = 0; i < IConfig.LARGEUR_CARTE; i++) {
 			for (int j = 0; j < IConfig.HAUTEUR_CARTE; j++) {
-				setElement(null,i,j);
+				setElement(null, i, j);
 			}
 		}
 
 		for (heros = 0; heros < IConfig.NB_HEROS; heros++) {
 			do {
 				p = trouvePositionVide();
-			} while (p.getX() < LARGEUR_CARTE-5|| p.getY() < HAUTEUR_CARTE-5);
+			} while (p.getX() < LARGEUR_CARTE - 5 || p.getY() < HAUTEUR_CARTE - 5);
 			setElement(new Heros(this, ISoldat.TypesH.getTypeHAlea(), "HerosAuPif", p), p.getX(), p.getY());
 		}
 		for (monstres = 0; monstres < IConfig.NB_MONSTRES; monstres++) {
@@ -44,7 +44,7 @@ public class Carte implements ICarte, IConfig {
 			setElement(new Obstacle(TypeObstacle.getObstacleAlea(), p), p.getX(), p.getY());
 		}
 	}
-	
+
 	@Override
 	/* retourne l'Element qui est a la Position passee en parametre */
 	public Element getElement(Position pos) {
@@ -117,16 +117,19 @@ public class Carte implements ICarte, IConfig {
 
 	@Override
 	public boolean deplaceSoldat(Position pos, Soldat soldat) {
-		int x = pos.getX();
-		int y = pos.getY();
-		int i, j;
-		if (carte[x][y] == null && x < LARGEUR_CARTE && y < HAUTEUR_CARTE) {
-			for (i = x - 1; i <= x + 1; i++) {
-				for (j = y - 1; j <= y + 1; j++) {
-					if ((i != x && j != y) && (carte[i][j] instanceof Heros)) {
-						soldat.setPosition(pos);
-						return true;
-					}
+		int i, j, x, y;
+		i = pos.getX();
+		j = pos.getY();
+		x = soldat.getPosition().getX();
+		y = soldat.getPosition().getY();
+		if (i < LARGEUR_CARTE && j < HAUTEUR_CARTE) {
+			if ((i != x || j != y) && (i >= x - 1) && (i <= x + 1) && (j >= y - 1) && (j <= y + 1)) {
+				if (carte[i][j] == null) {
+					carte[i][j] = soldat;
+					soldat.getPosition().setX(i);
+					soldat.getPosition().setY(j);
+					carte[x][y] = null;
+					return true;
 				}
 			}
 		}
@@ -167,11 +170,11 @@ public class Carte implements ICarte, IConfig {
 						g.setColor(COULEUR_HEROS);
 					if (carte[i][j] instanceof Monstre)
 						g.setColor(COULEUR_MONSTRES);
-					if(carte[i][j] instanceof Obstacle)
-						g.setColor(((Obstacle)carte[i][j]).getCouleur());
+					if (carte[i][j] instanceof Obstacle)
+						g.setColor(((Obstacle) carte[i][j]).getCouleur());
 				}
 				/* dessin de la case */
-				 g.fillRect(i*NB_PIX_CASE, j*NB_PIX_CASE, NB_PIX_CASE, NB_PIX_CASE);
+				g.fillRect(i * NB_PIX_CASE, j * NB_PIX_CASE, NB_PIX_CASE, NB_PIX_CASE);
 			}
 		}
 		/* trace de la grille de jeu */
