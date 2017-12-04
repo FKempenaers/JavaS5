@@ -28,10 +28,10 @@ public class PanneauJeu extends JPanel {
 				el = carte.getElement(pos); 
 				if(heros_clic && SwingUtilities.isRightMouseButton(e)) {
 					((Soldat)eh).combat((Soldat)el);
-					((Soldat)eh).tours = true;
+					((Soldat)eh).tour = true;
 				}
 				if(el instanceof Heros) {
-					if(((Soldat)el).tours == false) {
+					if(((Soldat)el).tour == false) {
 						heros_clic = true;
 						posh.setX(pos.getX());
 						posh.setY(pos.getY());
@@ -41,7 +41,7 @@ public class PanneauJeu extends JPanel {
 				else if(heros_clic && ((Soldat)eh).getmove()){
 					if(carte.deplaceSoldat(pos, (Soldat)eh)) {
 						((Soldat)eh).setmove();
-						((Soldat)eh).tours = true;
+						((Soldat)eh).tour = true;
 						if(((Heros)eh).incrementherosj()){
 							carte.jouerMonstres();
 						}

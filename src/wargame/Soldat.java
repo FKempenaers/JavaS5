@@ -8,19 +8,15 @@ public abstract class Soldat extends Element implements ISoldat {
 	private int pointsDeVie;
 	private Position pos;
 	protected Carte carte;
-<<<<<<< HEAD
-	protected boolean tours;
-	private boolean move;
-=======
 	protected boolean tour;
->>>>>>> branch 'dev' of https://github.com/FKempenaers/JavaS5.git
+	private boolean move;
 
 	Soldat(Carte carte, int pts, int portee, int puiss, int tir, Position pos) {
 		POINTS_DE_VIE_MAX = pointsDeVie = pts;
 		PORTEE_VISUELLE = portee;
 		PUISSANCE = puiss;
 		TIR = tir;
-		tours = false;
+		tour = false;
 		move = true;
 		this.carte = carte;
 		this.pos = pos;
@@ -77,7 +73,7 @@ public abstract class Soldat extends Element implements ISoldat {
 		else {
 			soldat.carte.mort(soldat);
 		}
-		this.tours = true;
+		this.tour = true;
 		
 	}
 
