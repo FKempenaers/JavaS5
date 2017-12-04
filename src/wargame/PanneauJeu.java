@@ -11,8 +11,6 @@ import javax.swing.SwingUtilities;
 import wargame.Obstacle.TypeObstacle;
 
 public class PanneauJeu extends JPanel {
-	int tourH;
-	int tourM;
 	private Element el,eh;
 	private Position pos,posh;
 	public Carte carte;
@@ -30,15 +28,24 @@ public class PanneauJeu extends JPanel {
 				el = carte.getElement(pos); 
 				if(heros_clic && SwingUtilities.isRightMouseButton(e)) {
 					((Soldat)eh).combat((Soldat)el);
+					((Soldat)eh).tours = true;
 				}
 				if(el instanceof Heros) {
-					heros_clic = true;
-					posh.setX(pos.getX());
-					posh.setY(pos.getY());
-					eh = el;
+					if(((Soldat)el).tours == false) {
+						heros_clic = true;
+						posh.setX(pos.getX());
+						posh.setY(pos.getY());
+						eh = el;
+					}
 				}
-				else if(heros_clic){
-					carte.deplaceSoldat(pos, (Soldat)eh);
+				else if(heros_clic && ((Soldat)eh).getmove()){
+					if(carte.deplaceSoldat(pos, (Soldat)eh)) {
+						((Soldat)eh).setmove();
+						((Soldat)eh).tours = true;
+						if(((Heros)eh).incrementherosj()){
+							carte.jouerMonstres();
+						}
+					}
 					heros_clic = false;
 				}
 				repaint();

@@ -18,6 +18,13 @@ public class Heros extends Soldat{
 		
 	}
 
+	public boolean incrementherosj() {
+		nbHerosjouee+=1;
+		if(nbHeros == nbHerosjouee) {
+			return true;
+		}
+		return false;
+	}
 	
 	
 }
