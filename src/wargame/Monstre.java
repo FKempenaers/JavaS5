@@ -31,11 +31,13 @@ public class Monstre extends Soldat {
 		Position pos,npos;
 		Heros cible = trouveCible();
 		pos = getPosition();
+		npos = null;
 		
 		if(cible != null)
 		combat(cible);
 		else {
 			npos=carte.trouvePositionVide(pos);
+			if(npos != null)
 			seDeplace(npos);
 			cible = trouveCible();
 			if(cible != null)
