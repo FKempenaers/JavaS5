@@ -21,7 +21,7 @@ public class Heros extends Soldat{
 	public static void initnbheros() {
 		nbHeros = IConfig.NB_HEROS;
 	}
-	public static void initnbherosjouee() {
+	public static void initnbherosjoues() {
 		nbHerosjoues = 0;
 	}
 	public boolean incrementherosj() {
