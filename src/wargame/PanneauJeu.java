@@ -31,6 +31,7 @@ public class PanneauJeu extends JPanel {
 					((Soldat)eh).tour = true;
 					if(((Heros)eh).incrementherosj()){
 						carte.jouerMonstres();
+						carte.resetTour();
 					}
 					heros_clic =false;
 				}
@@ -44,10 +45,11 @@ public class PanneauJeu extends JPanel {
 				}
 				else if(heros_clic && ((Soldat)eh).getmove()){
 					if(carte.deplaceSoldat(pos, (Soldat)eh)) {
-						((Soldat)eh).setmove();
+						((Soldat)eh).setmove(false);
 						((Soldat)eh).tour = true;
 						if(((Heros)eh).incrementherosj()){
 							carte.jouerMonstres();
+							carte.resetTour();
 						}
 					}
 					heros_clic = false;

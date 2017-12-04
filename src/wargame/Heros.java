@@ -17,7 +17,9 @@ public class Heros extends Soldat{
 		// TODO Auto-generated method stub
 		
 	}
-
+	public void get_nn() {
+		System.out.println(nbHeros+" "+nbHerosjoues);
+	}
 	public static void initnbheros() {
 		nbHeros = IConfig.NB_HEROS;
 	}

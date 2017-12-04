@@ -26,8 +26,8 @@ public abstract class Soldat extends Element implements ISoldat {
 	public boolean getmove() {
 		return this.move;
 	}
-	public void setmove() {
-		this.move = false;
+	public void setmove(boolean b) {
+		this.move = b;
 	}
 	public Position getPosition() {
 		return pos;
