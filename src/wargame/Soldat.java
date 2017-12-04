@@ -38,7 +38,29 @@ public abstract class Soldat extends Element implements ISoldat {
 	}
 	@Override
 	public void combat(Soldat soldat) {
-				
+		int d,puissancethis,puissancesoldat;
+		if(adjacent(soldat)) {
+			puissancethis = this.PUISSANCE;
+			puissancesoldat = soldat.PUISSANCE;
+		}
+		else if (aPortee(soldat)) {
+			puissancethis = this.TIR;
+			puissancesoldat = soldat.TIR;
+		}
+		Random r = new Random();
+		d = r.nextInt(puissancethis);
+		soldat.pointsDeVie -= d;
+		if(soldat.pointsDeVie > 0) {
+			d = r.nextInt(puissancesoldat);
+			this.pointsDeVie -= d;
+			if(this.pointsDeVie < 1) {
+				this.carte.mort(this);
+			}
+		}
+		else {
+			soldat.carte.mort(soldat);
+		}
+		
 	}
 
 	@Override
