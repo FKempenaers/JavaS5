@@ -218,6 +218,7 @@ public class Carte implements ICarte, IConfig {
 				if (carte[i][j] instanceof Soldat) {
 					s = (Soldat) carte[i][j];
 					s.tour = false;
+					s.setmove(true);
 				}
 			}
 		}
