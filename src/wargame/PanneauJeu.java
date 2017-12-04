@@ -6,10 +6,13 @@ import java.awt.event.MouseEvent;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import wargame.Obstacle.TypeObstacle;
 
 public class PanneauJeu extends JPanel {
+	int tourH;
+	int tourM;
 	private Element el,eh;
 	private Position pos,posh;
 	public Carte carte;
@@ -25,6 +28,9 @@ public class PanneauJeu extends JPanel {
 				pos.setX((int)Math.floor(e.getX()/IConfig.NB_PIX_CASE));
 				pos.setY((int)Math.floor(e.getY()/IConfig.NB_PIX_CASE));
 				el = carte.getElement(pos); 
+				if(heros_clic && SwingUtilities.isRightMouseButton(e)) {
+					((Soldat)eh).combat((Soldat)el);
+				}
 				if(el instanceof Heros) {
 					heros_clic = true;
 					posh.setX(pos.getX());

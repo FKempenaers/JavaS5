@@ -1,11 +1,14 @@
 package wargame;
 
+import java.util.Random;
+
 public abstract class Soldat extends Element implements ISoldat {
 
 	private final int POINTS_DE_VIE_MAX, PUISSANCE, TIR, PORTEE_VISUELLE;
 	private int pointsDeVie;
 	private Position pos;
 	protected Carte carte;
+	private int tours;
 
 	Soldat(Carte carte, int pts, int portee, int puiss, int tir, Position pos) {
 		POINTS_DE_VIE_MAX = pointsDeVie = pts;
@@ -38,7 +41,8 @@ public abstract class Soldat extends Element implements ISoldat {
 	}
 	@Override
 	public void combat(Soldat soldat) {
-		int d,puissancethis,puissancesoldat;
+		int d,puissancethis = 0,puissancesoldat = 0;
+		
 		if(adjacent(soldat)) {
 			puissancethis = this.PUISSANCE;
 			puissancesoldat = soldat.PUISSANCE;
