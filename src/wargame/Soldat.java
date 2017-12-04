@@ -44,6 +44,34 @@ public abstract class Soldat extends Element implements ISoldat {
 	@Override
 	public void seDeplace(Position newPos) {
 		carte.deplaceSoldat(newPos, this);
-		
 	}
+	
+	public boolean aPortee(Soldat soldat) {
+		int portee = getPortee();
+		Position pos,posCible;
+		int i, j, x, y;
+		pos = getPosition();
+		posCible = soldat.getPosition();
+		x = pos.getX();
+		y = pos.getY();
+		i = posCible.getX();
+		j = posCible.getY();
+		if(i>= x-portee && i<= x+portee && j>= y-portee && j<= y+portee)
+			return true;
+		return false;
+	}
+	
+	
+	public boolean adjacent(Soldat soldat) {
+		int x = pos.getX();
+		int y = pos.getY();
+		Position p = soldat.getPosition();
+		int i = p.getX();
+		int j = p.getY();
+			if(i>= x-1 && i<= x+1 && j>= y-1 && j<= y+1)
+				return true;
+		return false;
+
+	}
+	
 }
