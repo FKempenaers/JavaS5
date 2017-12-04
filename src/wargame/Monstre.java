@@ -41,7 +41,7 @@ public class Monstre extends Soldat {
 			if(cible != null)
 				combat(cible);
 		}
-		super.tours=true;
+		super.tour=true;
 	}
 	
 	public Heros trouveCible() {
