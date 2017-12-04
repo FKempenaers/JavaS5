@@ -48,11 +48,11 @@ PUISSANCE = puissance; TIR = tir;
 
 	int getPoints();
 
-	int getTour();
+	boolean getTour();
 
 	int getPortee();
 
-	void joueTour(int tour);
+	void joueTour();
 
 	void combat(Soldat soldat);
 

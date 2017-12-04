@@ -8,6 +8,7 @@ public abstract class Soldat extends Element implements ISoldat {
 	private int pointsDeVie;
 	private Position pos;
 	protected Carte carte;
+	protected boolean tour;
 
 	Soldat(Carte carte, int pts, int portee, int puiss, int tir, Position pos) {
 		POINTS_DE_VIE_MAX = pointsDeVie = pts;
@@ -30,8 +31,8 @@ public abstract class Soldat extends Element implements ISoldat {
 	}
 
 	@Override
-	public int getTour() {
-		return 0;
+	public boolean getTour() {
+		return tour;
 	}
 
 	@Override
@@ -40,7 +41,8 @@ public abstract class Soldat extends Element implements ISoldat {
 	}
 	@Override
 	public void combat(Soldat soldat) {
-		int d,puissancethis=0,puissancesoldat=0;
+		int d,puissancethis = 0,puissancesoldat = 0;
+
 		if(adjacent(soldat)) {
 			puissancethis = this.PUISSANCE;
 			puissancesoldat = soldat.PUISSANCE;
