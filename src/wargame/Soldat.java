@@ -11,6 +11,7 @@ public abstract class Soldat extends Element implements ISoldat {
 	protected boolean tour;
 	private boolean move;
 
+
 	Soldat(Carte carte, int pts, int portee, int puiss, int tir, Position pos) {
 		POINTS_DE_VIE_MAX = pointsDeVie = pts;
 		PORTEE_VISUELLE = portee;
