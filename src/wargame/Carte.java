@@ -74,9 +74,9 @@ public class Carte implements ICarte, IConfig {
 	public Position trouvePositionVide(Position pos) {
 		int x = pos.getX();
 		int y = pos.getY();
-		for (int i = x - 1; (i <= x + 1) && (i < LARGEUR_CARTE) &&(i >= 0); i++) {
-			for (int j = y - 1; (j <= y + 1) && (j < HAUTEUR_CARTE) && (j >= 0); j++) {
-				if ((i != x && j != y) && (carte[i][j] == null))
+		for (int i = x - 1; (i <= x + 1) && (i < LARGEUR_CARTE); i++) {
+			for (int j = y - 1; (j <= y + 1) && (j < HAUTEUR_CARTE); j++) {
+				if ((i >= 0) && (j >= 0) && (i != x && j != y) && (carte[i][j] == null))
 					return new Position(i, j);
 			}
 		}
