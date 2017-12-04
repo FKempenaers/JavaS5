@@ -123,7 +123,7 @@ public class Carte implements ICarte, IConfig {
 		x = soldat.getPosition().getX();
 		y = soldat.getPosition().getY();
 		if (i < LARGEUR_CARTE && j < HAUTEUR_CARTE) {
-			if ((i != x || j != y) && (i >= x - 1) && (i <= x + 1) && (j >= y - 1) && (j <= y + 1)) {
+			if ((i != x || j != y) && (((i >= x - 1) && (i <= x + 1)) && ((j >= y - 1) && (j <= y + 1)))) {
 				if (carte[i][j] == null) {
 					carte[i][j] = soldat;
 					soldat.getPosition().setX(i);

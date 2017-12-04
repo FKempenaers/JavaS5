@@ -17,7 +17,7 @@ public abstract class Soldat extends Element implements ISoldat {
 
 	}
 	public Position getPosition() {
-		return new Position(pos.getX(),pos.getY());
+		return pos;
 	}
 	public void setPosition(Position pos) {
 		pos = new Position(pos.getX(),pos.getY());
@@ -38,8 +38,7 @@ public abstract class Soldat extends Element implements ISoldat {
 	}
 	@Override
 	public void combat(Soldat soldat) {
-		// TODO Auto-generated method stub
-		
+				
 	}
 
 	@Override
