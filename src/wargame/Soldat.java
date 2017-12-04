@@ -44,7 +44,7 @@ public abstract class Soldat extends Element implements ISoldat {
 
 	@Override
 	public void seDeplace(Position newPos) {
-		// TODO Auto-generated method stub
+		carte.deplaceSoldat(newPos, this);
 		
 	}
 }
