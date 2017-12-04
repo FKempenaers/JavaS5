@@ -29,6 +29,10 @@ public class PanneauJeu extends JPanel {
 				if(heros_clic && SwingUtilities.isRightMouseButton(e)) {
 					((Soldat)eh).combat((Soldat)el);
 					((Soldat)eh).tour = true;
+					if(((Heros)eh).incrementherosj()){
+						carte.jouerMonstres();
+					}
+					heros_clic =false;
 				}
 				if(el instanceof Heros) {
 					if(((Soldat)el).tour == false) {
