@@ -32,8 +32,7 @@ public class PanneauJeu extends JPanel {
 					eh = el;
 				}
 				else if(heros_clic){
-					carte.setElement(null, posh.getX(), posh.getY());
-					carte.setElement(eh, pos.getX(), pos.getY());
+					carte.deplaceSoldat(pos, (Soldat)eh);
 					heros_clic = false;
 				}
 				repaint();
