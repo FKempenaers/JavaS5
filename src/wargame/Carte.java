@@ -43,6 +43,7 @@ public class Carte implements ICarte, IConfig {
 			p = trouvePositionVide();
 			setElement(new Obstacle(TypeObstacle.getObstacleAlea(), p), p.getX(), p.getY());
 		}
+		Heros.initnbheros();
 	}
 
 	@Override
@@ -220,6 +221,7 @@ public class Carte implements ICarte, IConfig {
 				}
 			}
 		}
+		Heros.initnbherosjoues();
 	}
 
 }
