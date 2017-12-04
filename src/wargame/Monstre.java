@@ -48,19 +48,20 @@ public class Monstre extends Soldat {
 	
 	public Heros trouveCible() {
 		int portee = getPortee();
-		Position pos;
+		Position pos,npos;
 		Heros cible = null;
 		int i, j, x, y;
 		pos = getPosition();
 		x = pos.getX();
 		y = pos.getY();
+		npos = new Position(x,y);
 		for (i = x - portee; (i < x + portee) && cible == null; i++) {
 			for (j = y - portee; (j < y + portee) && cible == null; j++) {
 				if (i > 0 && j > 0 && i < IConfig.LARGEUR_CARTE && j < IConfig.HAUTEUR_CARTE) {
-					pos.setX(i);
-					pos.setY(j);
-					if(carte.getElement(pos) instanceof Heros) {
-						cible = (Heros)carte.getElement(pos);
+					npos.setX(i);
+					npos.setY(j);
+					if(carte.getElement(npos) instanceof Heros) {
+						cible = (Heros)carte.getElement(npos);
 					}
 				}
 			}
