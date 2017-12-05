@@ -67,6 +67,7 @@ public class Monstre extends Soldat {
 				nouvY = thisY;
 				newPos.setX(nouvX);
 				newPos.setY(nouvY);
+			}
 		}
 	}
 
