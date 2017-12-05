@@ -235,6 +235,19 @@ public class Carte implements ICarte, IConfig {
 		}
 
 	}
+	public void findetourrepos() {
+		int i, j;
+		for (j = 0; j < HAUTEUR_CARTE; j++) {
+			for (i = 0; i < LARGEUR_CARTE; i++) {
+				if (carte[i][j] instanceof Heros) {
+					if(((Heros)carte[i][j]).tour) {
+						((Soldat)carte[i][j]).repos();
+					}
+				}
+				/* dessin de la case */
+			}
+		}
+	}
 
 	public void resetTour() {
 		int i, j;

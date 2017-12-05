@@ -91,7 +91,6 @@ public abstract class Soldat extends Element implements ISoldat {
 	
 	public void afficheinfo(Graphics g) {
 		g.setColor(Color.BLACK);
-		System.out.println("tset");
 		if(this instanceof Heros) {
 			g.drawString(((Heros)this).toString() , 20 , 630 );
 		}
@@ -110,7 +109,6 @@ public abstract class Soldat extends Element implements ISoldat {
 		this.tour = true;
 	}
 
-	@Override
 	public boolean seDeplace(Position newPos) {
 		return carte.deplaceSoldat(newPos, this);
 	}
