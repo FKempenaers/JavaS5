@@ -251,6 +251,7 @@ public class Carte implements ICarte, IConfig {
 	public void resetTour() {
 		int i, j;
 		Soldat s;
+		
 		for (i = 0; i < IConfig.LARGEUR_CARTE; i++) {
 			for (j = 0; j < IConfig.HAUTEUR_CARTE; j++) {
 				if (carte[i][j] instanceof Soldat) {
