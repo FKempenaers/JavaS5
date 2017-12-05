@@ -119,8 +119,8 @@ public class Monstre extends Soldat {
 		x = pos.getX();
 		y = pos.getY();
 		npos = new Position(x, y);
-		for (i = x - portee; (i < x + portee) && cible == null; i++) {
-			for (j = y - portee; (j < y + portee) && cible == null; j++) {
+		for (i = x - portee; (i <= x + portee) && cible == null; i++) {
+			for (j = y - portee; (j <= y + portee) && cible == null; j++) {
 				if (i > 0 && j > 0 && i < IConfig.LARGEUR_CARTE && j < IConfig.HAUTEUR_CARTE) {
 					npos.setX(i);
 					npos.setY(j);
