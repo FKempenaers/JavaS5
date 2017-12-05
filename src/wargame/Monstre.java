@@ -40,25 +40,36 @@ public class Monstre extends Soldat {
 
 	private void seRapprocher(int x, int y) {
 		Position pos = this.getPosition();
-		Position newPos = new Position(0,0);
+		Position newPos = new Position(0, 0);
 		int thisX = pos.getX();
 		int thisY = pos.getY();
 		int nouvX = thisX;
-		 int nouvY = thisY;
-		
-		if(thisX < x)
+		int nouvY = thisY;
+
+		if (thisX < x)
 			nouvX++;
-		else if(thisX>x)
+		else if (thisX > x)
 			nouvX--;
-		if(thisY < y)
+		if (thisY < y)
 			nouvY++;
-		else if(thisY>y)
+		else if (thisY > y)
 			nouvY--;
-		
+
 		newPos.setX(nouvX);
 		newPos.setY(nouvY);
-		this.seDeplace(newPos);	
+		if (!this.seDeplace(newPos)) {
+			nouvX = thisX;
+			nouvY = thisY + 1;
+			newPos.setX(nouvX);
+			newPos.setY(nouvY);
+			if (!this.seDeplace(newPos)) {
+				nouvX = thisX + 1;
+				nouvY = thisY;
+				newPos.setX(nouvX);
+				newPos.setY(nouvY);
+		}
 	}
+
 	public String toString() {
 		String s = TYPE + super.toString();
 		return s;
@@ -90,7 +101,7 @@ public class Monstre extends Soldat {
 		if (cible != null)
 			combat(cible);
 		else {
-			seRapprocher(tpos.getX(),tpos.getY());
+			seRapprocher(tpos.getX(), tpos.getY());
 			cible = trouveCible();
 			if (cible != null)
 				combat(cible);
