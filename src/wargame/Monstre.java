@@ -94,9 +94,8 @@ public class Monstre extends Soldat {
 	@Override
 	public void joueTour() {
 		Monstre.target = trouveTarget();
-		Position pos, tpos;
+		Position tpos;
 		Heros cible = trouveCible();
-		pos = getPosition();
 		tpos = target.getPosition();
 
 		if (cible != null)
