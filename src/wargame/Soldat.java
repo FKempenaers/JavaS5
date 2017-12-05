@@ -52,6 +52,9 @@ public abstract class Soldat extends Element implements ISoldat {
 	public boolean getTour() {
 		return tour;
 	}
+	public int getNum() {
+		return numero;
+	}
 
 	@Override
 	public int getPortee() {
@@ -108,8 +111,8 @@ public abstract class Soldat extends Element implements ISoldat {
 	}
 
 	@Override
-	public void seDeplace(Position newPos) {
-		carte.deplaceSoldat(newPos, this);
+	public boolean seDeplace(Position newPos) {
+		return carte.deplaceSoldat(newPos, this);
 	}
 	
 	public boolean aPortee(Soldat soldat) {
