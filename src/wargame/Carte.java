@@ -240,11 +240,10 @@ public class Carte implements ICarte, IConfig {
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
 			for (i = 0; i < LARGEUR_CARTE; i++) {
 				if (carte[i][j] instanceof Heros) {
-					if(((Heros)carte[i][j]).tour) {
+					if(!((Heros)carte[i][j]).tour) {
 						((Soldat)carte[i][j]).repos();
 					}
 				}
-				/* dessin de la case */
 			}
 		}
 	}

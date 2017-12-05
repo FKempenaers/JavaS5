@@ -13,7 +13,7 @@ public class FenetreJeu implements IConfig{
 		JFrame frame = new JFrame("Wargame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocation(POSITION_X,POSITION_Y);
-		frame.setPreferredSize(new Dimension(NB_PIX_CASE*(LARGEUR_CARTE+1), NB_PIX_CASE*(HAUTEUR_CARTE+1)));
+		frame.setPreferredSize(new Dimension(NB_PIX_CASE*(LARGEUR_CARTE+5), NB_PIX_CASE*(HAUTEUR_CARTE+5)));
 		
 		JPanel pan = new JPanel();
 		pan.setBackground(Color.GRAY);
