@@ -48,6 +48,7 @@ public class Carte implements ICarte, IConfig {
 			setElement(new Obstacle(TypeObstacle.getObstacleAlea(), p), p.getX(), p.getY());
 		}
 		Heros.initnbheros();
+		Monstre.initnbMonstres();
 	}
 
 	@Override
