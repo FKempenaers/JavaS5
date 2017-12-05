@@ -31,13 +31,13 @@ public class Carte implements ICarte, IConfig {
 			do {
 				p = trouvePositionVide();
 			} while (p.getX() < LARGEUR_CARTE - 5 || p.getY() < HAUTEUR_CARTE - 5);
-			setElement(new Heros(this, ISoldat.TypesH.getTypeHAlea(), "HerosAuPif", p), p.getX(), p.getY());
+			setElement(new Heros(this, ISoldat.TypesH.getTypeHAlea(), "HerosAuPif", p,heros+1), p.getX(), p.getY());
 		}
 		for (monstres = 0; monstres < IConfig.NB_MONSTRES; monstres++) {
 			do {
 				p = trouvePositionVide();
 			} while (p.getX() > 5 || p.getY() > 5);
-			setElement(new Monstre(this, ISoldat.TypesM.getTypeMAlea(), "MonstreAuPif", p), p.getX(), p.getY());
+			setElement(new Monstre(this, ISoldat.TypesM.getTypeMAlea(), "MonstreAuPif", p,monstres+1), p.getX(), p.getY());
 		}
 		for (obstacles = 0; obstacles < IConfig.NB_OBSTACLES; obstacles++) {
 			p = trouvePositionVide();

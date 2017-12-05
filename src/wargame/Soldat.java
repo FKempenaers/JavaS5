@@ -10,9 +10,9 @@ public abstract class Soldat extends Element implements ISoldat {
 	protected Carte carte;
 	protected boolean tour;
 	private boolean move;
-	
+	private int numero;
 
-	Soldat(Carte carte, int pts, int portee, int puiss, int tir, Position pos) {
+	Soldat(Carte carte, int pts, int portee, int puiss, int tir, Position pos, int numero) {
 		POINTS_DE_VIE_MAX = pointsDeVie = pts;
 		PORTEE_VISUELLE = portee;
 		PUISSANCE = puiss;
@@ -21,7 +21,7 @@ public abstract class Soldat extends Element implements ISoldat {
 		move = true;
 		this.carte = carte;
 		this.pos = pos;
-
+		this.numero = numero;
 	}
 	public boolean getmove() {
 		return this.move;
