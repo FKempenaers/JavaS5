@@ -78,12 +78,13 @@ public abstract class Soldat extends Element implements ISoldat {
 		
 	}
 	/*un soldat qui se repose recupere au max 20% de ses hp*/
-	public void repos(Soldat soldat) {
-		int valeur = (soldat.POINTS_DE_VIE_MAX*20)/100;
-		if(soldat.pointsDeVie+valeur > soldat.POINTS_DE_VIE_MAX)
-			soldat.pointsDeVie = soldat.POINTS_DE_VIE_MAX;
+	public void repos() {
+		int valeur = (this.POINTS_DE_VIE_MAX*20)/100;
+		if(this.pointsDeVie+valeur > this.POINTS_DE_VIE_MAX)
+			this.pointsDeVie = this.POINTS_DE_VIE_MAX;
 		else
-			soldat.pointsDeVie += valeur;
+			this.pointsDeVie += valeur;
+		this.tour = true;
 	}
 	
 	@Override
