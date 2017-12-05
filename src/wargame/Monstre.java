@@ -4,16 +4,66 @@ public class Monstre extends Soldat {
 
 	private final String NOM;
 	private final TypesM TYPE;
+	private static Heros target;
 
-	public Monstre(Carte carte, TypesM type, String nom, Position pos) {
-		super(carte, type.getPoints(), type.getPortee(), type.getPuissance(), type.getTir(), pos);
+	public Monstre(Carte carte, TypesM type, String nom, Position pos, int numero) {
+		super(carte, type.getPoints(), type.getPortee(), type.getPuissance(), type.getTir(), pos, numero);
 		NOM = nom;
 		TYPE = type;
 	}
-	public String toString(){
-		String s = TYPE+super.toString();
+
+	private Heros trouveTarget() {
+		Heros cible = carte.trouveHeros();
+		int i, j, x, y;
+		Position posCible = cible.getPosition();
+		Position newPos = new Position(0, 0);
+		x = posCible.getX();
+		y = posCible.getY();
+		for (i = 0; i < IConfig.LARGEUR_CARTE; i++) {
+			for (j = 0; j < IConfig.HAUTEUR_CARTE; j++) {
+				newPos.setX(i);
+				newPos.setY(j);
+				if (carte.getElement(newPos) instanceof Heros) {
+					// si le heros trouve est plus proche de (0,0) que la cible connue, il devient
+					// la nouvelle cible;
+					if (i < x && j < y) {
+						cible = (Heros) carte.getElement(newPos);
+						posCible = cible.getPosition();
+						x = posCible.getX();
+						y = posCible.getY();
+					}
+				}
+			}
+		}
+		return cible;
+	}
+
+	private void seRapprocher(int x, int y) {
+		Position pos = this.getPosition();
+		Position newPos = new Position(0,0);
+		int thisX = pos.getX();
+		int thisY = pos.getY();
+		int nouvX = thisX;
+		 int nouvY = thisY;
+		
+		if(thisX < x)
+			nouvX++;
+		else if(thisX>x)
+			nouvX--;
+		if(thisY < y)
+			nouvY++;
+		else if(thisY>y)
+			nouvY--;
+		
+		newPos.setX(nouvX);
+		newPos.setY(nouvY);
+		this.seDeplace(newPos);	
+	}
+	public String toString() {
+		String s = TYPE + super.toString();
 		return s;
 	}
+
 	@Override
 	public int getPoints() {
 		return super.getPoints();
@@ -31,40 +81,39 @@ public class Monstre extends Soldat {
 
 	@Override
 	public void joueTour() {
-		Position pos,npos;
+		Monstre.target = trouveTarget();
+		Position pos, tpos;
 		Heros cible = trouveCible();
 		pos = getPosition();
-		npos = null;
-		
-		if(cible != null)
-		combat(cible);
+		tpos = target.getPosition();
+
+		if (cible != null)
+			combat(cible);
 		else {
-			npos=carte.trouvePositionVide(pos);
-			if(npos != null)
-			seDeplace(npos);
+			seRapprocher(tpos.getX(),tpos.getY());
 			cible = trouveCible();
-			if(cible != null)
+			if (cible != null)
 				combat(cible);
 		}
-		super.tour=true;
+		super.tour = true;
 	}
-	
+
 	public Heros trouveCible() {
 		int portee = getPortee();
-		Position pos,npos;
+		Position pos, npos;
 		Heros cible = null;
 		int i, j, x, y;
 		pos = getPosition();
 		x = pos.getX();
 		y = pos.getY();
-		npos = new Position(x,y);
+		npos = new Position(x, y);
 		for (i = x - portee; (i < x + portee) && cible == null; i++) {
 			for (j = y - portee; (j < y + portee) && cible == null; j++) {
 				if (i > 0 && j > 0 && i < IConfig.LARGEUR_CARTE && j < IConfig.HAUTEUR_CARTE) {
 					npos.setX(i);
 					npos.setY(j);
-					if(carte.getElement(npos) instanceof Heros) {
-						cible = (Heros)carte.getElement(npos);
+					if (carte.getElement(npos) instanceof Heros) {
+						cible = (Heros) carte.getElement(npos);
 					}
 				}
 			}
@@ -79,9 +128,8 @@ public class Monstre extends Soldat {
 	}
 
 	@Override
-	public void seDeplace(Position newPos) {
-		super.seDeplace(newPos);
+	public boolean seDeplace(Position newPos) {
+		return super.seDeplace(newPos);
 	}
-
 
 }

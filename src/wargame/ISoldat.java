@@ -56,5 +56,5 @@ PUISSANCE = puissance; TIR = tir;
 
 	void combat(Soldat soldat);
 
-	void seDeplace(Position newPos);
+	boolean seDeplace(Position newPos);
 }

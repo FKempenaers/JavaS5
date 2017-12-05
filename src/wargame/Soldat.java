@@ -14,9 +14,9 @@ public abstract class Soldat extends Element implements ISoldat {
 	protected Carte carte;
 	protected boolean tour;
 	private boolean move;
-	
+	private int numero;
 
-	Soldat(Carte carte, int pts, int portee, int puiss, int tir, Position pos) {
+	Soldat(Carte carte, int pts, int portee, int puiss, int tir, Position pos, int numero) {
 		POINTS_DE_VIE_MAX = pointsDeVie = pts;
 		PORTEE_VISUELLE = portee;
 		PUISSANCE = puiss;
@@ -25,7 +25,7 @@ public abstract class Soldat extends Element implements ISoldat {
 		move = true;
 		this.carte = carte;
 		this.pos = pos;
-
+		this.numero = numero;
 	}
 	public String toString(){
 		String s = " vie : "+pointsDeVie+" Point de vie max : "+POINTS_DE_VIE_MAX+" portée : "+this.getPortee()+" puissance corp à corp : "+PUISSANCE+" puissance tir : "+TIR;
@@ -51,6 +51,9 @@ public abstract class Soldat extends Element implements ISoldat {
 	@Override
 	public boolean getTour() {
 		return tour;
+	}
+	public int getNum() {
+		return numero;
 	}
 
 	@Override
@@ -105,10 +108,17 @@ public abstract class Soldat extends Element implements ISoldat {
 			this.pointsDeVie += valeur;
 		this.tour = true;
 	}
+<<<<<<< HEAD
 	
 
 	public void seDeplace(Position newPos) {
 		carte.deplaceSoldat(newPos, this);
+=======
+
+	@Override
+	public boolean seDeplace(Position newPos) {
+		return carte.deplaceSoldat(newPos, this);
+>>>>>>> branch 'dev' of https://github.com/FKempenaers/JavaS5.git
 	}
 	
 	public boolean aPortee(Soldat soldat) {

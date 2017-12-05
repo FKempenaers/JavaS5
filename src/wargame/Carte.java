@@ -31,13 +31,14 @@ public class Carte implements ICarte, IConfig {
 			do {
 				p = trouvePositionVide();
 			} while (p.getX() < LARGEUR_CARTE - 5 || p.getY() < HAUTEUR_CARTE - 5);
-			setElement(new Heros(this, ISoldat.TypesH.getTypeHAlea(), "HerosAuPif", p), p.getX(), p.getY());
+			setElement(new Heros(this, ISoldat.TypesH.getTypeHAlea(), "HerosAuPif", p, heros + 1), p.getX(), p.getY());
 		}
 		for (monstres = 0; monstres < IConfig.NB_MONSTRES; monstres++) {
 			do {
 				p = trouvePositionVide();
 			} while (p.getX() > 5 || p.getY() > 5);
-			setElement(new Monstre(this, ISoldat.TypesM.getTypeMAlea(), "MonstreAuPif", p), p.getX(), p.getY());
+			setElement(new Monstre(this, ISoldat.TypesM.getTypeMAlea(), "MonstreAuPif", p, monstres + 1), p.getX(),
+					p.getY());
 		}
 		for (obstacles = 0; obstacles < IConfig.NB_OBSTACLES; obstacles++) {
 			p = trouvePositionVide();
@@ -141,7 +142,7 @@ public class Carte implements ICarte, IConfig {
 	public void mort(Soldat perso) {
 		// on retire le soldat de sa position dans le tableau
 		carte[perso.getPosition().getX()][perso.getPosition().getY()] = null;
-		if(perso instanceof Heros) {
+		if (perso instanceof Heros) {
 			((Heros) perso).decrementnbHeros();
 		}
 		// on met son pointeur a null
@@ -164,6 +165,8 @@ public class Carte implements ICarte, IConfig {
 	public void toutDessiner(Graphics g) {
 		// TODO Auto-generated method stub
 		int i, j;
+		char num;
+		String s;
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
 			for (i = 0; i < LARGEUR_CARTE; i++) {
 				/* couleur de la case suivant type d'element */
@@ -185,6 +188,26 @@ public class Carte implements ICarte, IConfig {
 				g.fillRect(i * NB_PIX_CASE, j * NB_PIX_CASE, NB_PIX_CASE, NB_PIX_CASE);
 			}
 		}
+
+		for (j = 0; j < HAUTEUR_CARTE; j++) {
+			for (i = 0; i < LARGEUR_CARTE; i++) {
+				/* couleur de la case suivant type d'element */
+				if (carte[i][j] != null) {
+					if (carte[i][j] instanceof Heros) {
+						g.setColor(Color.black);
+						num = (char) ((((Soldat) carte[i][j]).getNum()) + 'A');
+						s = Character.toString(num);
+						g.drawString(s, i * NB_PIX_CASE + NB_PIX_CASE / 2, j * NB_PIX_CASE + NB_PIX_CASE / 2);
+					}
+					if (carte[i][j] instanceof Monstre) {
+						g.setColor(Color.white);
+						s = Integer.toString(((Soldat) carte[i][j]).getNum());
+						g.drawString(s, i * NB_PIX_CASE + NB_PIX_CASE / 2, j * NB_PIX_CASE + NB_PIX_CASE / 2);
+					}
+				}
+			}
+		}
+
 		/* trace de la grille de jeu */
 		g.setColor(Color.DARK_GRAY);
 		for (i = 0; i <= LARGEUR_CARTE; i++)

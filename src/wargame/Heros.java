@@ -6,9 +6,9 @@ public class Heros extends Soldat{
 	private final TypesH TYPE;
 	private static int nbHeros;
 	private static int nbHerosjoues;
-	public Heros(Carte carte, TypesH type, String nom, Position pos) {
+	public Heros(Carte carte, TypesH type, String nom, Position pos, int numero) {
 		super(carte, type.getPoints(), type.getPortee(),
-		type.getPuissance(), type.getTir(), pos);
+		type.getPuissance(), type.getTir(), pos, numero);
 		NOM = nom; TYPE = type;
 		}
 
