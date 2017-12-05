@@ -108,17 +108,9 @@ public abstract class Soldat extends Element implements ISoldat {
 			this.pointsDeVie += valeur;
 		this.tour = true;
 	}
-<<<<<<< HEAD
-	
 
-	public void seDeplace(Position newPos) {
-		carte.deplaceSoldat(newPos, this);
-=======
-
-	@Override
 	public boolean seDeplace(Position newPos) {
 		return carte.deplaceSoldat(newPos, this);
->>>>>>> branch 'dev' of https://github.com/FKempenaers/JavaS5.git
 	}
 	
 	public boolean aPortee(Soldat soldat) {
