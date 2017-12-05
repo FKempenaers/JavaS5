@@ -10,7 +10,10 @@ public class Monstre extends Soldat {
 		NOM = nom;
 		TYPE = type;
 	}
-
+	public String toString(){
+		String s = TYPE+super.toString();
+		return s;
+	}
 	@Override
 	public int getPoints() {
 		return super.getPoints();
