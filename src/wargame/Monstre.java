@@ -5,6 +5,7 @@ public class Monstre extends Soldat {
 	private final String NOM;
 	private final TypesM TYPE;
 	private static Heros target;
+	private static int nbMonstres;
 
 	public Monstre(Carte carte, TypesM type, String nom, Position pos, int numero) {
 		super(carte, type.getPoints(), type.getPortee(), type.getPuissance(), type.getTir(), pos, numero);
@@ -136,6 +137,13 @@ public class Monstre extends Soldat {
 			}
 		}
 		return cible;
+	}
+	
+	public void decrementnbMonstres() {
+		nbMonstres--;
+	}
+	public static void initnbMonstres() {
+		nbMonstres = IConfig.NB_MONSTRES;
 	}
 
 	@Override
