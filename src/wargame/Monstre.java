@@ -12,6 +12,10 @@ public class Monstre extends Soldat {
 		NOM = nom;
 		TYPE = type;
 	}
+	
+	public int getnbMonstres() {
+		return nbMonstres;
+	}
 
 	private Heros trouveTarget() {
 		Heros cible = carte.trouveHeros();

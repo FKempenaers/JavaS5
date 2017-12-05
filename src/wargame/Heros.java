@@ -12,7 +12,9 @@ public class Heros extends Soldat{
 		NOM = nom; TYPE = type;
 		}
 
-
+	public int getnbHeros() {
+		return nbHeros;
+	}
 	public void joueTour() {
 		// TODO Auto-generated method stub
 		

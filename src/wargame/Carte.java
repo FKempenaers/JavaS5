@@ -8,12 +8,13 @@ import wargame.Obstacle.TypeObstacle;
 
 public class Carte implements ICarte, IConfig {
 	private Element[][] carte;
-
+	private boolean finjeu;
 	/*
 	 * la carte est un tableau d'Element (Obstacle,Soldat ou null si case vide),
 	 * chaque Element est place dans la case qui correspond a sa Position
 	 */
 	public Carte() {
+		finjeu = false;
 		this.carte = new Element[LARGEUR_CARTE][HAUTEUR_CARTE];
 		initCarte();
 	}
@@ -148,6 +149,15 @@ public class Carte implements ICarte, IConfig {
 		carte[perso.getPosition().getX()][perso.getPosition().getY()] = null;
 		if (perso instanceof Heros) {
 			((Heros) perso).decrementnbHeros();
+			if(((Heros)perso).getnbHeros() == 0){
+				finjeu = true;
+			}
+		}
+		else {
+			((Monstre) perso).decrementnbMonstres();
+			if(((Monstre)perso).getnbMonstres() == 0){
+				finjeu = true;
+			}
 		}
 		// on met son pointeur a null
 		perso = null;
