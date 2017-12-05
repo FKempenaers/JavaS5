@@ -15,6 +15,8 @@ public class Monstre extends Soldat {
 	private Heros trouveTarget() {
 		Heros cible = carte.trouveHeros();
 		int i, j, x, y;
+		if(cible == null)
+			return null;
 		Position posCible = cible.getPosition();
 		Position newPos = new Position(0, 0);
 		x = posCible.getX();
@@ -94,6 +96,10 @@ public class Monstre extends Soldat {
 	@Override
 	public void joueTour() {
 		Monstre.target = trouveTarget();
+		if(target == null) {
+			super.tour = true;
+			return;
+		}
 		Position tpos;
 		Heros cible = trouveCible();
 		tpos = target.getPosition();
