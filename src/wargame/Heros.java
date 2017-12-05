@@ -12,7 +12,7 @@ public class Heros extends Soldat{
 		NOM = nom; TYPE = type;
 		}
 
-	public int getnbHeros() {
+	public static int getnbHeros() {
 		return nbHeros;
 	}
 	public void joueTour() {

@@ -13,7 +13,7 @@ public class Monstre extends Soldat {
 		TYPE = type;
 	}
 	
-	public int getnbMonstres() {
+	public static int getnbMonstres() {
 		return nbMonstres;
 	}
 

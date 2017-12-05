@@ -18,10 +18,11 @@ import wargame.Obstacle.TypeObstacle;
 public class PanneauJeu extends JPanel {
 	private Element el,eh;
 	private Position pos,posh;
-	public Carte carte;
+	private Carte carte;
 	private boolean heros_clic,monstre_clic;
 	JFrame frame = new JFrame();
 	private JButton b1 = new JButton("Fin de tour");
+	private JButton b2 = new JButton("Recommencer");
 	//private JPanel s1 = new JPanel();
 	
 	public PanneauJeu() {
@@ -32,6 +33,16 @@ public class PanneauJeu extends JPanel {
 		posh = new Position(0,0);
 		carte = new Carte();
 		
+		b2.setPreferredSize(new Dimension(150,60));
+		add(b2,BorderLayout.EAST);
+		b2.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) {
+				carte = new Carte();
+				repaint();
+			}
+		});
+		repaint();
 		
 		b1.setPreferredSize(new Dimension(40,60));
 		add(b1,BorderLayout.SOUTH);
@@ -42,7 +53,6 @@ public class PanneauJeu extends JPanel {
 				carte.jouerMonstres();
 				carte.resetTour();
 				repaint();
-				
 			}
 		});
 		
@@ -95,14 +105,25 @@ public class PanneauJeu extends JPanel {
 			}
 		});
 		
+		
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-		carte.toutDessiner(g);
-		if(heros_clic || monstre_clic) {
-			((Soldat)eh).afficheinfo(g);
+		if(!carte.getfinjeu())
+		{
+			carte.toutDessiner(g);
+			if(heros_clic || monstre_clic) {
+				((Soldat)eh).afficheinfo(g);
+			}
+		}
+		else {
+			if(Monstre.getnbMonstres() == 0){
+				g.drawString("Vous avez gagné!!!!!!!", 300, 300);
+			}
+			else {
+				g.drawString("Vous avez perdu", 300, 300);
+			}
+			}
 		}
 		
-	}
 }

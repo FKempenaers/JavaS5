@@ -18,7 +18,9 @@ public class Carte implements ICarte, IConfig {
 		this.carte = new Element[LARGEUR_CARTE][HAUTEUR_CARTE];
 		initCarte();
 	}
-
+	public boolean getfinjeu() {
+		return finjeu;
+	}
 	public void initCarte() {
 		int heros, monstres, obstacles;
 		Position p;
@@ -156,6 +158,7 @@ public class Carte implements ICarte, IConfig {
 		else {
 			((Monstre) perso).decrementnbMonstres();
 			if(((Monstre)perso).getnbMonstres() == 0){
+				System.out.println("coucou");
 				finjeu = true;
 			}
 		}
