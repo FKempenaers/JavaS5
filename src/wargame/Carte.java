@@ -87,14 +87,18 @@ public class Carte implements ICarte, IConfig {
 	@Override
 	/* retourne un Heros trouve aleatoirement sur la carte */
 	public Heros trouveHeros() {
+		int compteur = 2 * LARGEUR_CARTE * HAUTEUR_CARTE;
 		int x, y;
 		x = y = 0;
 		Random r = new Random();
 		Element e;
 		do {
+			if(compteur == 0)
+				return null;
 			x = r.nextInt(LARGEUR_CARTE);
 			y = r.nextInt(HAUTEUR_CARTE);
 			e = carte[x][y];
+			compteur --;
 		} while (!(e instanceof Heros));
 		return (Heros) e;
 	}
