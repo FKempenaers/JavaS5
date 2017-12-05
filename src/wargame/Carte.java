@@ -141,6 +141,9 @@ public class Carte implements ICarte, IConfig {
 	public void mort(Soldat perso) {
 		// on retire le soldat de sa position dans le tableau
 		carte[perso.getPosition().getX()][perso.getPosition().getY()] = null;
+		if(perso instanceof Heros) {
+			((Heros) perso).decrementnbHeros();
+		}
 		// on met son pointeur a null
 		perso = null;
 	}

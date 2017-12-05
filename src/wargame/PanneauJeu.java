@@ -14,10 +14,11 @@ public class PanneauJeu extends JPanel {
 	private Element el,eh;
 	private Position pos,posh;
 	public Carte carte;
-	private boolean heros_clic;
+	private boolean heros_clic,monstre_clic;
 
 	public PanneauJeu() {
 		heros_clic = false;
+		monstre_clic = false;
 		pos = new Position(0,0);
 		posh = new Position(0,0);
 		carte = new Carte();
@@ -54,12 +55,25 @@ public class PanneauJeu extends JPanel {
 					}
 					heros_clic = false;
 				}
+				else if(el instanceof Monstre) {
+					monstre_clic = true;
+					eh = el;
+				}
+				else {
+					monstre_clic = false;
+					heros_clic = false;
+				}
 				repaint();
 			}
 		});
 	}
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
 		carte.toutDessiner(g);
-
+		if(heros_clic || monstre_clic) {
+			((Soldat)eh).afficheinfo(g);
+		}
+		
 	}
 }

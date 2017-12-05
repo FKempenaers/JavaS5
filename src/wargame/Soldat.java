@@ -1,6 +1,10 @@
 package wargame;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Random;
+
+import javax.swing.JTextArea;
 
 public abstract class Soldat extends Element implements ISoldat {
 
@@ -22,6 +26,10 @@ public abstract class Soldat extends Element implements ISoldat {
 		this.carte = carte;
 		this.pos = pos;
 		this.numero = numero;
+	}
+	public String toString(){
+		String s = " vie : "+pointsDeVie+" Point de vie max : "+POINTS_DE_VIE_MAX+" portée : "+this.getPortee()+" puissance corp à corp : "+PUISSANCE+" puissance tir : "+TIR;
+		return s;
 	}
 	public boolean getmove() {
 		return this.move;
@@ -77,6 +85,20 @@ public abstract class Soldat extends Element implements ISoldat {
 		this.tour = true;
 		
 	}
+<<<<<<< HEAD
+	
+	public void afficheinfo(Graphics g) {
+		g.setColor(Color.BLACK);
+		System.out.println("tset");
+		if(this instanceof Heros) {
+			g.drawString(((Heros)this).toString() , 20 , 630 );
+		}
+		else {
+			g.drawString(((Monstre)this).toString() , 20 , 630 );
+		}
+	}
+
+=======
 	/*un soldat qui se repose recupere au max 20% de ses hp*/
 	public void repos() {
 		int valeur = (this.POINTS_DE_VIE_MAX*20)/100;
@@ -87,6 +109,7 @@ public abstract class Soldat extends Element implements ISoldat {
 		this.tour = true;
 	}
 	
+>>>>>>> branch 'dev' of https://github.com/FKempenaers/JavaS5.git
 	@Override
 	public void seDeplace(Position newPos) {
 		carte.deplaceSoldat(newPos, this);
