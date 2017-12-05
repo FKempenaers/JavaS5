@@ -85,11 +85,9 @@ public abstract class Soldat extends Element implements ISoldat {
 		this.tour = true;
 		
 	}
-<<<<<<< HEAD
 	
 	public void afficheinfo(Graphics g) {
 		g.setColor(Color.BLACK);
-		System.out.println("tset");
 		if(this instanceof Heros) {
 			g.drawString(((Heros)this).toString() , 20 , 630 );
 		}
@@ -98,7 +96,6 @@ public abstract class Soldat extends Element implements ISoldat {
 		}
 	}
 
-=======
 	/*un soldat qui se repose recupere au max 20% de ses hp*/
 	public void repos() {
 		int valeur = (this.POINTS_DE_VIE_MAX*20)/100;
@@ -109,8 +106,7 @@ public abstract class Soldat extends Element implements ISoldat {
 		this.tour = true;
 	}
 	
->>>>>>> branch 'dev' of https://github.com/FKempenaers/JavaS5.git
-	@Override
+
 	public void seDeplace(Position newPos) {
 		carte.deplaceSoldat(newPos, this);
 	}

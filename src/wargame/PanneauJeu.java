@@ -1,10 +1,15 @@
 package wargame;
-
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.sql.rowset.CachedRowSet;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -15,13 +20,34 @@ public class PanneauJeu extends JPanel {
 	private Position pos,posh;
 	public Carte carte;
 	private boolean heros_clic,monstre_clic;
-
+	JFrame frame = new JFrame();
+	private JButton b1 = new JButton("Fin de tour");
+	//private JPanel s1 = new JPanel();
+	
 	public PanneauJeu() {
+		super(new BorderLayout());
 		heros_clic = false;
 		monstre_clic = false;
 		pos = new Position(0,0);
 		posh = new Position(0,0);
 		carte = new Carte();
+		
+		
+		b1.setPreferredSize(new Dimension(40,60));
+		add(b1,BorderLayout.SOUTH);
+		b1.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) {
+				carte.findetourrepos();
+				carte.jouerMonstres();
+				carte.resetTour();
+				repaint();
+				
+			}
+		});
+		
+		
+		
 		addMouseListener( new MouseAdapter() {
 			public void mouseClicked(MouseEvent	e){
 				pos.setX((int)Math.floor(e.getX()/IConfig.NB_PIX_CASE));
@@ -66,6 +92,7 @@ public class PanneauJeu extends JPanel {
 				repaint();
 			}
 		});
+		
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
