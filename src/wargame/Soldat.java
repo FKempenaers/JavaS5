@@ -73,10 +73,10 @@ public abstract class Soldat extends Element implements ISoldat {
 			puissancesoldat = soldat.TIR;
 		}
 		Random r = new Random();
-		d = r.nextInt((puissancethis+1)/2);
+		d = r.nextInt(puissancethis+1);
 		soldat.pointsDeVie -= d;
 		if(soldat.pointsDeVie > 0) {
-			d = r.nextInt(puissancesoldat+1);
+			d = r.nextInt(puissancesoldat/2+1);
 			this.pointsDeVie -= d;
 			if(this.pointsDeVie < 1) {
 				this.carte.mort(this);

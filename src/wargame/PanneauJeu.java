@@ -54,13 +54,15 @@ public class PanneauJeu extends JPanel {
 				pos.setY((int)Math.floor(e.getY()/IConfig.NB_PIX_CASE));
 				el = carte.getElement(pos); 
 				if(heros_clic && SwingUtilities.isRightMouseButton(e)) {
-					((Soldat)eh).combat((Soldat)el);
-					((Soldat)eh).tour = true;
-					if(((Heros)eh).incrementherosj()){
-						carte.jouerMonstres();
-						carte.resetTour();
+					if(el instanceof Monstre) {
+						((Soldat)eh).combat((Soldat)el);
+						((Soldat)eh).tour = true;
+						if(((Heros)eh).incrementherosj()){
+							carte.jouerMonstres();
+							carte.resetTour();
+						}
+						heros_clic =false;
 					}
-					heros_clic =false;
 				}
 				if(el instanceof Heros) {
 					if(((Soldat)el).tour == false) {
