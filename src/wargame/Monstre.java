@@ -98,7 +98,6 @@ public class Monstre extends Soldat {
 		return super.getPortee();
 	}
 
-	@Override
 	public void joueTour() {
 		Monstre.target = trouveTarget();
 		if(target == null) {
