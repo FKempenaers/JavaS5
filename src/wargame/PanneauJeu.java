@@ -70,17 +70,18 @@ public class PanneauJeu extends JPanel {
 						/* Si l'element selectionne est un Monstre */
 						if (el instanceof Monstre) {
 							/* On le combat et signale que le Heros a joue son tour */
-							((Soldat) eh).combat((Soldat) el);
-							((Soldat) eh).tour = true;
-							/*
-							 * Si apres incrementation du nombre de Heros ayant joue ils ont tous fait leur
-							 * tour On fait jouer les Monstres On prepare le prochain tour
-							 */
-							if (((Heros) eh).incrementherosj()) {
-								carte.jouerMonstres();
-								carte.resetTour();
+							if(((Soldat) eh).combat((Soldat) el)) {
+								((Soldat) eh).tour = true;
+							   /*
+							   * Si apres incrementation du nombre de Heros ayant joue ils ont tous fait leur
+							   * tour On fait jouer les Monstres On prepare le prochain tour
+							   */
+								if (((Heros) eh).incrementherosj()) {
+									carte.jouerMonstres();
+									carte.resetTour();
+								}
+							    heros_clic = false;
 							}
-							heros_clic = false;
 						}
 					}
 					/*

@@ -169,8 +169,8 @@ public class Monstre extends Soldat {
 	}
 
 	@Override
-	public void combat(Soldat soldat) {
-		super.combat(soldat);
+	public boolean combat(Soldat soldat) {
+		return super.combat(soldat);
 	}
 
 	@Override
