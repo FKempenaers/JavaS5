@@ -7,13 +7,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.sql.rowset.CachedRowSet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import wargame.Obstacle.TypeObstacle;
 
 public class PanneauJeu extends JPanel {
 	private Element el,eh;
@@ -35,6 +33,7 @@ public class PanneauJeu extends JPanel {
 		
 		b2.setPreferredSize(new Dimension(150,60));
 		add(b2,BorderLayout.EAST);
+		/*Le bouton Recommencer cree une nouvelle carte*/
 		b2.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) {
@@ -46,6 +45,10 @@ public class PanneauJeu extends JPanel {
 		
 		b1.setPreferredSize(new Dimension(40,60));
 		add(b1,BorderLayout.SOUTH);
+		/*Bouton fin de tour, appelle :
+		 * findetourrepos pour que les heros non joues se reposent
+		 * jouerMonstres pour que les monstres jouent leur tour
+		 * resetTour pour debuter le tour suivant */
 		b1.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) {
@@ -57,16 +60,22 @@ public class PanneauJeu extends JPanel {
 		});
 		
 		
-		
+		/*Gere les clics sur la carte */
 		addMouseListener( new MouseAdapter() {
 			public void mouseClicked(MouseEvent	e){
 				pos.setX((int)Math.floor(e.getX()/IConfig.NB_PIX_CASE));
 				pos.setY((int)Math.floor(e.getY()/IConfig.NB_PIX_CASE));
 				el = carte.getElement(pos); 
+				/*Si on a deja selectionne un Heros et qu'on vient de faire un clic droit */
 				if(heros_clic && SwingUtilities.isRightMouseButton(e)) {
+					/*Si l'element selectionne est un Monstre */
 					if(el instanceof Monstre) {
+						/*On le combat et signale que le Heros a joue son tour*/
 						((Soldat)eh).combat((Soldat)el);
 						((Soldat)eh).tour = true;
+						/*Si apres incrementation du nombre de Heros ayant joue ils ont tous fait leur tour
+						 *On fait jouer les Monstres
+						 *On prepare le prochain tour  */
 						if(((Heros)eh).incrementherosj()){
 							carte.jouerMonstres();
 							carte.resetTour();
@@ -74,6 +83,8 @@ public class PanneauJeu extends JPanel {
 						heros_clic =false;
 					}
 				}
+				/*Si la case correspond a un heros qui a un tour a jouer
+				 *on memorise sa position  */
 				if(el instanceof Heros) {
 					if(((Soldat)el).tour == false) {
 						heros_clic = true;
@@ -82,6 +93,11 @@ public class PanneauJeu extends JPanel {
 						eh = el;
 					}
 				}
+				/*Sinon si on a deja selectionne un Heros et que celui ci peut bouger
+				 * on le tente de le deplacer vers la case cliquee
+				 * on fait appel a incrementherosj : si tous les Heros ont joue
+				 *  on fait jouer les Monstres et prepare le prochain tour
+				 *  */
 				else if(heros_clic && ((Soldat)eh).getmove()){
 					if(carte.deplaceSoldat(pos, (Soldat)eh)) {
 						((Soldat)eh).setmove(false);
@@ -109,6 +125,10 @@ public class PanneauJeu extends JPanel {
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		/*Si ce n'est pas la fin du jeu
+		 * Si on a clique un Heros ou un Monstre, on affiche ses infos
+		 * 
+		 *  Sinon on affiche un message de victoire ou defaite*/
 		if(!carte.getfinjeu())
 		{
 			carte.toutDessiner(g);
