@@ -61,63 +61,65 @@ public class PanneauJeu extends JPanel {
 		/* Gere les clics sur la carte */
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				pos.setX((int) Math.floor(e.getX() / IConfig.NB_PIX_CASE));
-				pos.setY((int) Math.floor(e.getY() / IConfig.NB_PIX_CASE));
-				el = carte.getElement(pos);
-				/* Si on a deja selectionne un Heros et qu'on vient de faire un clic droit */
-				if (heros_clic && SwingUtilities.isRightMouseButton(e)) {
-					/* Si l'element selectionne est un Monstre */
-					if (el instanceof Monstre) {
-						/* On le combat et signale que le Heros a joue son tour */
-						((Soldat) eh).combat((Soldat) el);
-						((Soldat) eh).tour = true;
-						/*
-						 * Si apres incrementation du nombre de Heros ayant joue ils ont tous fait leur
-						 * tour On fait jouer les Monstres On prepare le prochain tour
-						 */
-						if (((Heros) eh).incrementherosj()) {
-							carte.jouerMonstres();
-							carte.resetTour();
+				if(e.getX() < IConfig.NB_PIX_CASE*IConfig.LARGEUR_CARTE && e.getY() < IConfig.NB_PIX_CASE*IConfig.HAUTEUR_CARTE) {
+					pos.setX((int) Math.floor(e.getX() / IConfig.NB_PIX_CASE));
+					pos.setY((int) Math.floor(e.getY() / IConfig.NB_PIX_CASE));
+					el = carte.getElement(pos);
+					/* Si on a deja selectionne un Heros et qu'on vient de faire un clic droit */
+					if (heros_clic && SwingUtilities.isRightMouseButton(e)) {
+						/* Si l'element selectionne est un Monstre */
+						if (el instanceof Monstre) {
+							/* On le combat et signale que le Heros a joue son tour */
+							((Soldat) eh).combat((Soldat) el);
+							((Soldat) eh).tour = true;
+							/*
+							 * Si apres incrementation du nombre de Heros ayant joue ils ont tous fait leur
+							 * tour On fait jouer les Monstres On prepare le prochain tour
+							 */
+							if (((Heros) eh).incrementherosj()) {
+								carte.jouerMonstres();
+								carte.resetTour();
+							}
+							heros_clic = false;
+						}
+					}
+					/*
+					 * Si la case correspond a un heros qui a un tour a jouer on memorise sa
+					 * position
+					 */
+					if (el instanceof Heros) {
+						if (((Soldat) el).tour == false) {
+							heros_clic = true;
+							posh.setX(pos.getX());
+							posh.setY(pos.getY());
+							eh = el;
+						}
+					}
+					/*
+					 * Sinon si on a deja selectionne un Heros et que celui ci peut bouger on le
+					 * tente de le deplacer vers la case cliquee on fait appel a incrementherosj :
+					 * si tous les Heros ont joue on fait jouer les Monstres et prepare le prochain
+					 * tour
+					 */
+					else if (heros_clic && ((Soldat) eh).getmove()) {
+						if (carte.deplaceSoldat(pos, (Soldat) eh)) {
+							((Soldat) eh).setmove(false);
+							((Soldat) eh).tour = true;
+							if (((Heros) eh).incrementherosj()) {
+								carte.jouerMonstres();
+								carte.resetTour();
+							}
 						}
 						heros_clic = false;
-					}
-				}
-				/*
-				 * Si la case correspond a un heros qui a un tour a jouer on memorise sa
-				 * position
-				 */
-				if (el instanceof Heros) {
-					if (((Soldat) el).tour == false) {
-						heros_clic = true;
-						posh.setX(pos.getX());
-						posh.setY(pos.getY());
+					} else if (el instanceof Monstre) {
+						monstre_clic = true;
 						eh = el;
+					} else {
+						monstre_clic = false;
+						heros_clic = false;
 					}
+					repaint();
 				}
-				/*
-				 * Sinon si on a deja selectionne un Heros et que celui ci peut bouger on le
-				 * tente de le deplacer vers la case cliquee on fait appel a incrementherosj :
-				 * si tous les Heros ont joue on fait jouer les Monstres et prepare le prochain
-				 * tour
-				 */
-				else if (heros_clic && ((Soldat) eh).getmove()) {
-					if (carte.deplaceSoldat(pos, (Soldat) eh)) {
-						((Soldat) eh).setmove(false);
-						((Soldat) eh).tour = true;
-						if (((Heros) eh).incrementherosj()) {
-							carte.jouerMonstres();
-							carte.resetTour();
-						}
-					}
-					heros_clic = false;
-				} else if (el instanceof Monstre) {
-					monstre_clic = true;
-					eh = el;
-				} else {
-					monstre_clic = false;
-					heros_clic = false;
-				}
-				repaint();
 			}
 		});
 
