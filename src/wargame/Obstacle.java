@@ -2,7 +2,7 @@ package wargame;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
+/*la classe qui represente les Obstacle */
 public class Obstacle extends Element implements IConfig {
 	
 	public enum TypeObstacle {
