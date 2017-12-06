@@ -9,18 +9,29 @@ import wargame.Obstacle.TypeObstacle;
 public class Carte implements ICarte, IConfig {
 	private Element[][] carte;
 	private boolean finjeu;
+
 	/*
 	 * la carte est un tableau d'Element (Obstacle,Soldat ou null si case vide),
-	 * chaque Element est place dans la case qui correspond a sa Position
+	 * chaque Element est place dans la case qui correspond a sa Position finjeu
+	 * vaut false quand la partie est en cours, true quand elle est terminee
 	 */
 	public Carte() {
 		finjeu = false;
 		this.carte = new Element[LARGEUR_CARTE][HAUTEUR_CARTE];
 		initCarte();
 	}
+
 	public boolean getfinjeu() {
 		return finjeu;
 	}
+
+	/*
+	 * Initialise la carte Les cases sont d'abord mises � null. Puis on ajoute des
+	 * Heros dans un carre de 5x5 dans le coin inferieur droit de la carte tant que
+	 * le nombre voulu n'est pas atteint. De meme pour les Monstres dans le coin
+	 * superieur gauche. Les Obstacles sont ensuite ajoutes sur toute la carte. Les
+	 * variables nbHeros et nbMonstres sont initialisees.
+	 */
 	public void initCarte() {
 		int heros, monstres, obstacles;
 		Position p;
@@ -89,7 +100,11 @@ public class Carte implements ICarte, IConfig {
 	}
 
 	@Override
-	/* retourne un Heros trouve aleatoirement sur la carte */
+	/*
+	 * retourne un Heros trouve aleatoirement sur la carte, la fonction a 2 fois le
+	 * nombre de cases de la carte tentatives pour trouver un Heros, elle retourne
+	 * null si elle a epuise le nombre de tentatives.
+	 */
 	public Heros trouveHeros() {
 		int compteur = 2 * LARGEUR_CARTE * HAUTEUR_CARTE;
 		int x, y;
@@ -97,12 +112,12 @@ public class Carte implements ICarte, IConfig {
 		Random r = new Random();
 		Element e;
 		do {
-			if(compteur == 0)
+			if (compteur == 0)
 				return null;
 			x = r.nextInt(LARGEUR_CARTE);
 			y = r.nextInt(HAUTEUR_CARTE);
 			e = carte[x][y];
-			compteur --;
+			compteur--;
 		} while (!(e instanceof Heros));
 		return (Heros) e;
 	}
@@ -126,6 +141,11 @@ public class Carte implements ICarte, IConfig {
 	}
 
 	@Override
+	/*
+	 * Deplace le Soldat soldat vers la Position pos sous reserve qu'elle soit vide
+	 * (retourne false sinon) Les cases de carte correspondant � l'ancienne Position
+	 * et � la nouvelle sont mises � jour tout comme la Position de soldat.
+	 */
 	public boolean deplaceSoldat(Position pos, Soldat soldat) {
 		int i, j, x, y;
 		i = pos.getX();
@@ -147,40 +167,31 @@ public class Carte implements ICarte, IConfig {
 	}
 
 	@Override
+	/*
+	 * gere la mort du Soldat perso : sa case et son pointeur passent a null. On
+	 * decremente nbMonstres ou nbHeros selon la classe de perso, si le nombre de
+	 * Monstre ou de Heros atteint 0, on passe finjeu a true pour declencher la fin
+	 * de la partie.
+	 */
 	public void mort(Soldat perso) {
-		// on retire le soldat de sa position dans le tableau
 		carte[perso.getPosition().getX()][perso.getPosition().getY()] = null;
 		if (perso instanceof Heros) {
 			((Heros) perso).decrementnbHeros();
-			if(((Heros)perso).getnbHeros() == 0){
+			if (Heros.getnbHeros() == 0) {
 				finjeu = true;
 			}
-		}
-		else {
+		} else {
 			((Monstre) perso).decrementnbMonstres();
-			if(((Monstre)perso).getnbMonstres() == 0){
-				System.out.println("coucou");
+			if (Monstre.getnbMonstres() == 0) {
 				finjeu = true;
 			}
 		}
-		// on met son pointeur a null
 		perso = null;
 	}
 
-	@Override
-	public boolean actionHeros(Position pos, Position pos2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void jouerSoldats(PanneauJeu pj) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
+	/* Dessin des elements de la carte */
 	public void toutDessiner(Graphics g) {
+
 		// TODO Auto-generated method stub
 		int[][] carte_b;
 		carte_b = new int[LARGEUR_CARTE+1][HAUTEUR_CARTE+1];
@@ -189,6 +200,7 @@ public class Carte implements ICarte, IConfig {
 		String s;
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
 			for (i = 0; i < LARGEUR_CARTE; i++) {
+
 				carte_b[i][j] = 0;
 			}
 		}
@@ -233,6 +245,7 @@ public class Carte implements ICarte, IConfig {
 						g.setColor(COULEUR_VIDE);
 					} else {
 						if (carte[i][j] instanceof Heros) {
+							/* Les Heros qui ont joue ont une couleur differente */
 							if (((Heros) carte[i][j]).getTour())
 								g.setColor(COULEUR_HEROS_DEJA_JOUE);
 							else
@@ -249,9 +262,9 @@ public class Carte implements ICarte, IConfig {
 			}
 		}
 
+		/* Ajout des numeros des Monstre et des lettres des Heros */
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
 			for (i = 0; i < LARGEUR_CARTE; i++) {
-				/* couleur de la case suivant type d'element */
 				if (carte[i][j] != null) {
 					if (carte[i][j] instanceof Heros) {
 						g.setColor(Color.black);
@@ -276,11 +289,15 @@ public class Carte implements ICarte, IConfig {
 			g.drawLine(0, j * NB_PIX_CASE, LARGEUR_CARTE * NB_PIX_CASE, j * NB_PIX_CASE);
 	}
 
-	/* Pour test : place un element dans la case passee en param */
+	/* Place un element dans la case passee en param */
 	public void setElement(Element e, int x, int y) {
 		carte[x][y] = e;
 	}
 
+	/*
+	 * Parcourt la carte, si on trouve un Monstre qui n'a pas joue son tour, il joue
+	 * son tour
+	 */
 	public void jouerMonstres() {
 		int i, j;
 		Monstre m;
@@ -295,23 +312,29 @@ public class Carte implements ICarte, IConfig {
 		}
 
 	}
+
+	/* Parcourt la carte, les Heros n'ayant pas joue leur tour se reposent */
 	public void findetourrepos() {
 		int i, j;
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
 			for (i = 0; i < LARGEUR_CARTE; i++) {
 				if (carte[i][j] instanceof Heros) {
-					if(!((Heros)carte[i][j]).tour) {
-						((Soldat)carte[i][j]).repos();
+					if (!((Heros) carte[i][j]).tour) {
+						((Soldat) carte[i][j]).repos();
 					}
 				}
 			}
 		}
 	}
 
+	/*
+	 * Parcourt la carte, les Soldat peuvent a nouveau jouer un tour et se deplacer,
+	 * le nombre de Heros ayant joue est remis � 0
+	 */
 	public void resetTour() {
 		int i, j;
 		Soldat s;
-		
+
 		for (i = 0; i < IConfig.LARGEUR_CARTE; i++) {
 			for (j = 0; j < IConfig.HAUTEUR_CARTE; j++) {
 				if (carte[i][j] instanceof Soldat) {

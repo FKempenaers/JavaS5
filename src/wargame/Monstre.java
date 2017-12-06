@@ -1,5 +1,6 @@
 package wargame;
 
+/*Les Monstre qui heritent de Soldat, se battent contre les Heros */
 public class Monstre extends Soldat {
 
 	private final String NOM;
@@ -12,15 +13,17 @@ public class Monstre extends Soldat {
 		NOM = nom;
 		TYPE = type;
 	}
-	
+
+	/* Retourne le nombre de Monstre encore en vie */
 	public static int getnbMonstres() {
 		return nbMonstres;
 	}
 
+	/* Parcourt la carte a la recherche d'un Heros a prendre pour cible */
 	private Heros trouveTarget() {
 		Heros cible = carte.trouveHeros();
 		int i, j, x, y;
-		if(cible == null)
+		if (cible == null)
 			return null;
 		Position posCible = cible.getPosition();
 		Position newPos = new Position(0, 0);
@@ -45,6 +48,10 @@ public class Monstre extends Soldat {
 		return cible;
 	}
 
+	/*
+	 * le Monstre tente de se rapprocher des coordonees passees en parametre en
+	 * evitant les cases occupees
+	 */
 	private void seRapprocher(int x, int y) {
 		Position pos = this.getPosition();
 		Position newPos = new Position(0, 0);
@@ -78,6 +85,7 @@ public class Monstre extends Soldat {
 		}
 	}
 
+	/* Retourne une String contenant les infos du Monstre */
 	public String toString() {
 		String s = TYPE + super.toString();
 		return s;
@@ -98,10 +106,18 @@ public class Monstre extends Soldat {
 		return super.getPortee();
 	}
 
-	@Override
+	/*
+	 * Le Monstre joue son tour, il utilise trouveTarget() pour trouver une cible
+	 * vers laquelle il se deplacera si besoin, si la fonction renvoie null, il n'y
+	 * a plus de Heros a prendre pour cible et rien a faire ce tour. Si une cible
+	 * existe, le Monstre tente d'attaquer un Heros a sa portee, retourne par
+	 * trouveCible. Si aucune cible n'est a portee, le Monstre entreprend de se
+	 * deplacer vers la cible trouvee au debut et tente a nouveau d'attaquer un
+	 * potentiel Heros a portee.
+	 */
 	public void joueTour() {
 		Monstre.target = trouveTarget();
-		if(target == null) {
+		if (target == null) {
 			super.tour = true;
 			return;
 		}
@@ -120,6 +136,7 @@ public class Monstre extends Soldat {
 		super.tour = true;
 	}
 
+	/*Renvoie un Heros a portee du Monstre et null s'il n'y en a pas */
 	public Heros trouveCible() {
 		int portee = getPortee();
 		Position pos, npos;
@@ -142,10 +159,11 @@ public class Monstre extends Soldat {
 		}
 		return cible;
 	}
-	
+/*Decremente le nombre de Monstre en vie */
 	public void decrementnbMonstres() {
 		nbMonstres--;
 	}
+/*Initialise le nombre de Monstre en vie a la valeur prevue dans IConfig */
 	public static void initnbMonstres() {
 		nbMonstres = IConfig.NB_MONSTRES;
 	}
@@ -153,7 +171,6 @@ public class Monstre extends Soldat {
 	@Override
 	public void combat(Soldat soldat) {
 		super.combat(soldat);
-
 	}
 
 	@Override

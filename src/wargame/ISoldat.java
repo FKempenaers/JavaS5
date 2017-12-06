@@ -52,8 +52,6 @@ PUISSANCE = puissance; TIR = tir;
 
 	int getPortee();
 
-	void joueTour();
-
 	void combat(Soldat soldat);
 
 	boolean seDeplace(Position newPos);
