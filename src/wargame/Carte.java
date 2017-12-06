@@ -182,28 +182,70 @@ public class Carte implements ICarte, IConfig {
 	@Override
 	public void toutDessiner(Graphics g) {
 		// TODO Auto-generated method stub
-		int i, j;
+		int[][] carte_b;
+		carte_b = new int[LARGEUR_CARTE+1][HAUTEUR_CARTE+1];
+		int i, j,e,y,p,e1,y1;
 		char num;
 		String s;
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
 			for (i = 0; i < LARGEUR_CARTE; i++) {
-				/* couleur de la case suivant type d'element */
-				if (carte[i][j] == null) {
-					g.setColor(COULEUR_VIDE);
-				} else {
-					if (carte[i][j] instanceof Heros) {
-						if (((Heros) carte[i][j]).getTour())
-							g.setColor(COULEUR_HEROS_DEJA_JOUE);
-						else
-							g.setColor(COULEUR_HEROS);
+				carte_b[i][j] = 0;
+			}
+		}
+		for (j = 0; j < HAUTEUR_CARTE; j++) {
+			for (i = 0; i < LARGEUR_CARTE; i++) {
+				if (carte[i][j] instanceof Heros) {
+					p = ((Soldat)carte[i][j]).getPortee();
+					if(j-p < 0) {
+						e = 0;
 					}
-					if (carte[i][j] instanceof Monstre)
-						g.setColor(COULEUR_MONSTRES);
-					if (carte[i][j] instanceof Obstacle)
-						g.setColor(((Obstacle) carte[i][j]).getCouleur());
+					else e = j-p;
+					if(j+p >HAUTEUR_CARTE) {
+						e1 = HAUTEUR_CARTE;
+					}
+					else e1 = j+p;
+					while (e < e1+1) {
+						if(i-p < 0) {
+							y = 0;
+						}
+						else y = i-p;
+						if(i+p > LARGEUR_CARTE) {
+							y1 = LARGEUR_CARTE;
+						}
+						else y1 = i+p;
+						while (y < y1+1) {
+							carte_b[y][e] = 1;
+							y++;
+						}
+						e++;
+					}
 				}
-				/* dessin de la case */
-				g.fillRect(i * NB_PIX_CASE, j * NB_PIX_CASE, NB_PIX_CASE, NB_PIX_CASE);
+			}
+		}
+		for (j = 0; j < HAUTEUR_CARTE; j++) {
+			for (i = 0; i < LARGEUR_CARTE; i++) {
+				/* couleur de la case suivant type d'element */
+				if(carte_b[i][j] == 0) {
+					g.setColor(COULEUR_INCONNU);
+				}
+				else {
+					if (carte[i][j] == null) {
+						g.setColor(COULEUR_VIDE);
+					} else {
+						if (carte[i][j] instanceof Heros) {
+							if (((Heros) carte[i][j]).getTour())
+								g.setColor(COULEUR_HEROS_DEJA_JOUE);
+							else
+								g.setColor(COULEUR_HEROS);
+						}
+						if (carte[i][j] instanceof Monstre)
+							g.setColor(COULEUR_MONSTRES);
+						if (carte[i][j] instanceof Obstacle)
+							g.setColor(((Obstacle) carte[i][j]).getCouleur());
+					}
+					/* dessin de la case */
+					g.fillRect(i * NB_PIX_CASE, j * NB_PIX_CASE, NB_PIX_CASE, NB_PIX_CASE);
+				}
 			}
 		}
 

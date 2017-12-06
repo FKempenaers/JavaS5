@@ -60,48 +60,50 @@ public class PanneauJeu extends JPanel {
 		
 		addMouseListener( new MouseAdapter() {
 			public void mouseClicked(MouseEvent	e){
-				pos.setX((int)Math.floor(e.getX()/IConfig.NB_PIX_CASE));
-				pos.setY((int)Math.floor(e.getY()/IConfig.NB_PIX_CASE));
-				el = carte.getElement(pos); 
-				if(heros_clic && SwingUtilities.isRightMouseButton(e)) {
-					if(el instanceof Monstre) {
-						((Soldat)eh).combat((Soldat)el);
-						((Soldat)eh).tour = true;
-						if(((Heros)eh).incrementherosj()){
-							carte.jouerMonstres();
-							carte.resetTour();
+				if((e.getX() < (IConfig.LARGEUR_CARTE * IConfig.NB_PIX_CASE) && e.getY() < (IConfig.HAUTEUR_CARTE * IConfig.NB_PIX_CASE))) {
+					pos.setX((int)Math.floor(e.getX()/IConfig.NB_PIX_CASE));
+					pos.setY((int)Math.floor(e.getY()/IConfig.NB_PIX_CASE));
+					el = carte.getElement(pos); 
+					if(heros_clic && SwingUtilities.isRightMouseButton(e)) {
+						if(el instanceof Monstre) {
+							((Soldat)eh).combat((Soldat)el);
+							((Soldat)eh).tour = true;
+							if(((Heros)eh).incrementherosj()){
+								carte.jouerMonstres();
+								carte.resetTour();
+							}
+							heros_clic =false;
 						}
-						heros_clic =false;
 					}
-				}
-				if(el instanceof Heros) {
-					if(((Soldat)el).tour == false) {
-						heros_clic = true;
-						posh.setX(pos.getX());
-						posh.setY(pos.getY());
+					if(el instanceof Heros) {
+						if(((Soldat)el).tour == false) {
+							heros_clic = true;
+							posh.setX(pos.getX());
+							posh.setY(pos.getY());
+							eh = el;
+						}
+					}
+					else if(heros_clic && ((Soldat)eh).getmove()){
+						if(carte.deplaceSoldat(pos, (Soldat)eh)) {
+							((Soldat)eh).setmove(false);
+							((Soldat)eh).tour = true;
+							if(((Heros)eh).incrementherosj()){
+								carte.jouerMonstres();
+								carte.resetTour();
+							}
+						}
+						heros_clic = false;
+					}
+					else if(el instanceof Monstre) {
+						monstre_clic = true;
 						eh = el;
 					}
-				}
-				else if(heros_clic && ((Soldat)eh).getmove()){
-					if(carte.deplaceSoldat(pos, (Soldat)eh)) {
-						((Soldat)eh).setmove(false);
-						((Soldat)eh).tour = true;
-						if(((Heros)eh).incrementherosj()){
-							carte.jouerMonstres();
-							carte.resetTour();
-						}
+					else {
+						monstre_clic = false;
+						heros_clic = false;
 					}
-					heros_clic = false;
+					repaint();
 				}
-				else if(el instanceof Monstre) {
-					monstre_clic = true;
-					eh = el;
-				}
-				else {
-					monstre_clic = false;
-					heros_clic = false;
-				}
-				repaint();
 			}
 		});
 		
