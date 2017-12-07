@@ -28,7 +28,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 	}
 
 	/*
-	 * Initialise la carte Les cases sont d'abord mises à null. Puis on ajoute des
+	 * Initialise la carte Les cases sont d'abord mises ï¿½ null. Puis on ajoute des
 	 * Heros dans un carre de 5x5 dans le coin inferieur droit de la carte tant que
 	 * le nombre voulu n'est pas atteint. De meme pour les Monstres dans le coin
 	 * superieur gauche. Les Obstacles sont ensuite ajoutes sur toute la carte. Les
@@ -145,8 +145,8 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 	@Override
 	/*
 	 * Deplace le Soldat soldat vers la Position pos sous reserve qu'elle soit vide
-	 * (retourne false sinon) Les cases de carte correspondant à l'ancienne Position
-	 * et à la nouvelle sont mises à jour tout comme la Position de soldat.
+	 * (retourne false sinon) Les cases de carte correspondant ï¿½ l'ancienne Position
+	 * et ï¿½ la nouvelle sont mises ï¿½ jour tout comme la Position de soldat.
 	 */
 	public boolean deplaceSoldat(Position pos, Soldat soldat) {
 		int i, j, x, y;
@@ -193,29 +193,74 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 
 	/* Dessin des elements de la carte */
 	public void toutDessiner(Graphics g) {
-		int i, j;
+
+		// TODO Auto-generated method stub
+		int[][] carte_b;
+		carte_b = new int[LARGEUR_CARTE+1][HAUTEUR_CARTE+1];
+		int i, j,e,y,p,e1,y1;
 		char num;
 		String s;
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
 			for (i = 0; i < LARGEUR_CARTE; i++) {
-				/* couleur de la case suivant type d'element */
-				if (carte[i][j] == null) {
-					g.setColor(COULEUR_VIDE);
-				} else {
-					if (carte[i][j] instanceof Heros) {
-						/* Les Heros qui ont joue ont une couleur differente */
-						if (((Heros) carte[i][j]).getTour())
-							g.setColor(COULEUR_HEROS_DEJA_JOUE);
-						else
-							g.setColor(COULEUR_HEROS);
+
+				carte_b[i][j] = 0;
+			}
+		}
+		for (j = 0; j < HAUTEUR_CARTE; j++) {
+			for (i = 0; i < LARGEUR_CARTE; i++) {
+				if (carte[i][j] instanceof Heros) {
+					p = ((Soldat)carte[i][j]).getPortee();
+					if(j-p < 0) {
+						e = 0;
 					}
-					if (carte[i][j] instanceof Monstre)
-						g.setColor(COULEUR_MONSTRES);
-					if (carte[i][j] instanceof Obstacle)
-						g.setColor(((Obstacle) carte[i][j]).getCouleur());
+					else e = j-p;
+					if(j+p >HAUTEUR_CARTE) {
+						e1 = HAUTEUR_CARTE;
+					}
+					else e1 = j+p;
+					while (e < e1+1) {
+						if(i-p < 0) {
+							y = 0;
+						}
+						else y = i-p;
+						if(i+p > LARGEUR_CARTE) {
+							y1 = LARGEUR_CARTE;
+						}
+						else y1 = i+p;
+						while (y < y1+1) {
+							carte_b[y][e] = 1;
+							y++;
+						}
+						e++;
+					}
 				}
-				/* dessin de la case */
-				g.fillRect(i * NB_PIX_CASE, j * NB_PIX_CASE, NB_PIX_CASE, NB_PIX_CASE);
+			}
+		}
+		for (j = 0; j < HAUTEUR_CARTE; j++) {
+			for (i = 0; i < LARGEUR_CARTE; i++) {
+				/* couleur de la case suivant type d'element */
+				if(carte_b[i][j] == 0) {
+					g.setColor(COULEUR_INCONNU);
+				}
+				else {
+					if (carte[i][j] == null) {
+						g.setColor(COULEUR_VIDE);
+					} else {
+						if (carte[i][j] instanceof Heros) {
+							/* Les Heros qui ont joue ont une couleur differente */
+							if (((Heros) carte[i][j]).getTour())
+								g.setColor(COULEUR_HEROS_DEJA_JOUE);
+							else
+								g.setColor(COULEUR_HEROS);
+						}
+						if (carte[i][j] instanceof Monstre)
+							g.setColor(COULEUR_MONSTRES);
+						if (carte[i][j] instanceof Obstacle)
+							g.setColor(((Obstacle) carte[i][j]).getCouleur());
+					}
+					/* dessin de la case */
+					g.fillRect(i * NB_PIX_CASE, j * NB_PIX_CASE, NB_PIX_CASE, NB_PIX_CASE);
+				}
 			}
 		}
 
@@ -286,7 +331,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 
 	/*
 	 * Parcourt la carte, les Soldat peuvent a nouveau jouer un tour et se deplacer,
-	 * le nombre de Heros ayant joue est remis à 0
+	 * le nombre de Heros ayant joue est remis ï¿½ 0
 	 */
 	public void resetTour() {
 		int i, j;

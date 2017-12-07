@@ -33,7 +33,7 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 	/* Retourne une String contenant les infos du Soldat */
 	public String toString() {
 		String s = " vie : " + pointsDeVie + " Points de vie max : " + POINTS_DE_VIE_MAX + " portee : "
-				+ this.getPortee() + " puissance corps a  corps : " + PUISSANCE + " puissance tir : " + TIR;
+				+ this.getPortee() + " puissance corps aï¿½ corps : " + PUISSANCE + " puissance tir : " + TIR;
 		return s;
 	}
 
@@ -80,16 +80,23 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 	 * l'attaque, il riposte avec une puissance divisee par deux. si les pointsDeVie
 	 * de l'un des Soldat atteignent 0, il meurt.
 	 */
-	public void combat(Soldat soldat) {
+	public boolean combat(Soldat soldat) {
 		int d, puissancethis = 0, puissancesoldat = 0;
 
 		if (adjacent(soldat)) {
 			puissancethis = this.PUISSANCE;
 			puissancesoldat = soldat.PUISSANCE;
-		} else if (aPortee(soldat)) {
-			puissancethis = this.TIR;
-			puissancesoldat = soldat.TIR;
+		} else {
+			if (aPortee(soldat)) {
+				puissancethis = this.TIR;	
+			}
+			else return false;
+			if (soldat.aPortee(this)) {
+				puissancesoldat = soldat.TIR;
+			}
+			else puissancesoldat = 0;
 		}
+		
 		Random r = new Random();
 		d = r.nextInt(puissancethis + 1);
 		soldat.pointsDeVie -= d;
@@ -103,6 +110,8 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 			soldat.carte.mort(soldat);
 		}
 		this.tour = true;
+		
+		return true;
 
 	}
 
