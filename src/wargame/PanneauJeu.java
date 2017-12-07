@@ -7,6 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,6 +25,8 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 	private Position pos, posh;
 	private Carte carte;
 	private boolean heros_clic, monstre_clic;
+	ObjectOutputStream oos = null;
+	ObjectInputStream ois = null;
 	JFrame frame = new JFrame();
 	private JButton b1 = new JButton("Fin de tour");
 	private JButton b2 = new JButton("Recommencer");
@@ -36,22 +43,60 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 		carte = new Carte();
 		this.setLayout(null);
 
-		b4.setBounds(IConfig.NB_PIX_CASE*IConfig.LARGEUR_CARTE+20,140, 150, 60);
+		b4.setBounds(IConfig.NB_PIX_CASE * IConfig.LARGEUR_CARTE + 20, 140, 150, 60);
 		add(b4);
 		b4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+
+				try {
+					final FileInputStream fichierIn = new FileInputStream("maclasse.ser");
+					ois = new ObjectInputStream(fichierIn);
+					carte = (Carte) ois.readObject();
+					Heros.compteHeros(carte);
+					Monstre.compteMonstre(carte);
+					repaint();
+					System.out.println("" + carte);
+				} catch (final java.io.IOException e) {
+					e.printStackTrace();
+				} catch (final ClassNotFoundException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						if (ois != null) {
+							ois.close();
+						}
+					} catch (final IOException ex) {
+						ex.printStackTrace();
+					}
+				}
 			}
 		});
-		b3.setBounds(IConfig.NB_PIX_CASE*IConfig.LARGEUR_CARTE+20,210, 150, 60);
+		b3.setBounds(IConfig.NB_PIX_CASE * IConfig.LARGEUR_CARTE + 20, 210, 150, 60);
 		add(b3);
-		b4.addActionListener(new ActionListener() {
+		b3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+				try {
+					final FileOutputStream fichierOut = new FileOutputStream("maclasse.ser");
+					oos = new ObjectOutputStream(fichierOut);
+					oos.writeObject(carte);
+					oos.flush();
+
+					System.out.println("" + carte);
+				} catch (final java.io.IOException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						if (oos != null) {
+							oos.close();
+						}
+					} catch (final IOException ex) {
+						ex.printStackTrace();
+					}
+				}
 			}
 		});
-		
-		b2.setBounds(IConfig.NB_PIX_CASE*IConfig.LARGEUR_CARTE+20,0, 150, 60);
+
+		b2.setBounds(IConfig.NB_PIX_CASE * IConfig.LARGEUR_CARTE + 20, 0, 150, 60);
 		add(b2);
 		/* Le bouton Recommencer cree une nouvelle carte */
 		b2.addActionListener(new ActionListener() {
@@ -61,7 +106,7 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 			}
 		});
 		repaint();
-		b1.setBounds(IConfig.NB_PIX_CASE*IConfig.LARGEUR_CARTE+20,70, 150, 60);
+		b1.setBounds(IConfig.NB_PIX_CASE * IConfig.LARGEUR_CARTE + 20, 70, 150, 60);
 		b1.setPreferredSize(new Dimension(40, 60));
 		add(b1, BorderLayout.SOUTH);
 		/*
@@ -81,7 +126,8 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 		/* Gere les clics sur la carte */
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if(e.getX() < IConfig.NB_PIX_CASE*IConfig.LARGEUR_CARTE && e.getY() < IConfig.NB_PIX_CASE*IConfig.HAUTEUR_CARTE) {
+				if (e.getX() < IConfig.NB_PIX_CASE * IConfig.LARGEUR_CARTE
+						&& e.getY() < IConfig.NB_PIX_CASE * IConfig.HAUTEUR_CARTE) {
 					pos.setX((int) Math.floor(e.getX() / IConfig.NB_PIX_CASE));
 					pos.setY((int) Math.floor(e.getY() / IConfig.NB_PIX_CASE));
 					el = carte.getElement(pos);
@@ -90,17 +136,17 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 						/* Si l'element selectionne est un Monstre */
 						if (el instanceof Monstre) {
 							/* On le combat et signale que le Heros a joue son tour */
-							if(((Soldat) eh).combat((Soldat) el)) {
+							if (((Soldat) eh).combat((Soldat) el)) {
 								((Soldat) eh).tour = true;
-							   /*
-							   * Si apres incrementation du nombre de Heros ayant joue ils ont tous fait leur
-							   * tour On fait jouer les Monstres On prepare le prochain tour
-							   */
+								/*
+								 * Si apres incrementation du nombre de Heros ayant joue ils ont tous fait leur
+								 * tour On fait jouer les Monstres On prepare le prochain tour
+								 */
 								if (((Heros) eh).incrementherosj()) {
 									carte.jouerMonstres();
 									carte.resetTour();
 								}
-							    heros_clic = false;
+								heros_clic = false;
 							}
 						}
 					}

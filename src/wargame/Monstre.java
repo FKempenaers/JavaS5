@@ -181,4 +181,24 @@ public class Monstre extends Soldat implements java.io.Serializable {
 		return super.seDeplace(newPos);
 	}
 
+	/* Au chargement d'une partie, recompte le nombre de Monstre sur la Carte */
+	public static void compteMonstre(Carte carte) {
+		int i, j;
+		Element e;
+		Position pos = new Position(0, 0);
+		nbMonstres = 0;
+		for (i = 0; i < IConfig.LARGEUR_CARTE; i++) {
+			for (j = 0; j < IConfig.HAUTEUR_CARTE; j++) {
+				pos.setX(i);
+				pos.setY(j);
+				e = carte.getElement(pos);
+				if (e != null) {
+					if (e instanceof Monstre) {
+						nbMonstres++;
+					}
+				}
+			}
+		}
+	}
+
 }
