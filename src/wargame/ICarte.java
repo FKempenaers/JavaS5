@@ -5,14 +5,14 @@ import java.awt.Graphics;
 public interface ICarte {
 	Element getElement(Position pos);
 
-	Position trouvePositionVide(); // Trouve al�atoirement une position vide sur la carte
+	Position trouvePositionVide(); // Trouve aleatoirement une position vide sur la carte
 
 	Position trouvePositionVide(Position pos); // Trouve une position vide choisie
-	// al�atoirement parmi les 8 positions adjacentes de pos
+	// aleatoirement parmi les 8 positions adjacentes de pos
 
-	Heros trouveHeros(); // Trouve al�atoirement un h�ros sur la carte
+	Heros trouveHeros(); // Trouve aleatoirement un heros sur la carte
 
-	Heros trouveHeros(Position pos); // Trouve un h�ros choisi al�atoirement
+	Heros trouveHeros(Position pos); // Trouve un heros choisi aleatoirement
 										// parmi les 8 positions adjacentes de pos
 
 	boolean deplaceSoldat(Position pos, Soldat soldat);

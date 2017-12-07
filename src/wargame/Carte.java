@@ -29,7 +29,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 	}
 
 	/*
-	 * Initialise la carte Les cases sont d'abord mises � null. Puis on ajoute des
+	 * Initialise la carte Les cases sont d'abord mises a null. Puis on ajoute des
 	 * Heros dans un carre de 5x5 dans le coin inferieur droit de la carte tant que
 	 * le nombre voulu n'est pas atteint. De meme pour les Monstres dans le coin
 	 * superieur gauche. Les Obstacles sont ensuite ajoutes sur toute la carte. Les
