@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/*La fenetre du jeu, utilise les variable de IConfig, ajoute le Panneau de Jeu et rend la fenetre visible */
+/**La fenetre du jeu, utilise les variable de IConfig, ajoute le Panneau de Jeu et rend la fenetre visible */
 public class FenetreJeu implements IConfig, java.io.Serializable {
 
 	private static final long serialVersionUID = 6876475270346699947L;

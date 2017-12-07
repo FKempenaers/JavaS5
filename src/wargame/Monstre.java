@@ -1,26 +1,28 @@
 package wargame;
 
-/*Les Monstre qui heritent de Soldat, se battent contre les Heros */
+/** Les Monstre qui heritent de Soldat, se battent contre les Heros */
 public class Monstre extends Soldat implements java.io.Serializable {
 
 	private static final long serialVersionUID = 4662812023001249671L;
-	private final String NOM;
 	private final TypesM TYPE;
 	private static Heros target;
 	private static int nbMonstres;
 
-	public Monstre(Carte carte, TypesM type, String nom, Position pos, int numero) {
+	public Monstre(Carte carte, TypesM type, Position pos, int numero) {
 		super(carte, type.getPoints(), type.getPortee(), type.getPuissance(), type.getTir(), pos, numero);
-		NOM = nom;
 		TYPE = type;
 	}
 
-	/* Retourne le nombre de Monstre encore en vie */
+	/** @return le nombre de Monstre encore en vie */
 	public static int getnbMonstres() {
 		return nbMonstres;
 	}
 
-	/* Parcourt la carte a la recherche d'un Heros a prendre pour cible */
+	/**
+	 * Parcourt la carte a la recherche d'un Heros a prendre pour cible
+	 * 
+	 * @return le Heros cible
+	 */
 	private Heros trouveTarget() {
 		Heros cible = carte.trouveHeros();
 		int i, j, x, y;
@@ -49,9 +51,15 @@ public class Monstre extends Soldat implements java.io.Serializable {
 		return cible;
 	}
 
-	/*
+	/**
 	 * le Monstre tente de se rapprocher des coordonees passees en parametre en
 	 * evitant les cases occupees
+	 * 
+	 * @param int
+	 *            x l'abscisse de la case
+	 * 
+	 * @param int
+	 *            y l'ordonnee de la case
 	 */
 	private void seRapprocher(int x, int y) {
 		Position pos = this.getPosition();
@@ -86,7 +94,7 @@ public class Monstre extends Soldat implements java.io.Serializable {
 		}
 	}
 
-	/* Retourne une String contenant les infos du Monstre */
+	/** @return une String contenant les infos du Monstre */
 	public String toString() {
 		String s = TYPE + super.toString();
 		return s;
@@ -107,7 +115,7 @@ public class Monstre extends Soldat implements java.io.Serializable {
 		return super.getPortee();
 	}
 
-	/*
+	/**
 	 * Le Monstre joue son tour, il utilise trouveTarget() pour trouver une cible
 	 * vers laquelle il se deplacera si besoin, si la fonction renvoie null, il n'y
 	 * a plus de Heros a prendre pour cible et rien a faire ce tour. Si une cible
@@ -137,7 +145,9 @@ public class Monstre extends Soldat implements java.io.Serializable {
 		super.tour = true;
 	}
 
-	/* Renvoie un Heros a portee du Monstre et null s'il n'y en a pas */
+	/**
+	 * @return Heros cible un Heros a portee du Monstre et null s'il n'y en a pas
+	 */
 	public Heros trouveCible() {
 		int portee = getPortee();
 		Position pos, npos;
@@ -161,12 +171,12 @@ public class Monstre extends Soldat implements java.io.Serializable {
 		return cible;
 	}
 
-	/* Decremente le nombre de Monstre en vie */
+	/** Decremente le nombre de Monstre en vie */
 	public void decrementnbMonstres() {
 		nbMonstres--;
 	}
 
-	/* Initialise le nombre de Monstre en vie a la valeur prevue dans IConfig */
+	/** Initialise le nombre de Monstre en vie a la valeur prevue dans IConfig */
 	public static void initnbMonstres() {
 		nbMonstres = IConfig.NB_MONSTRES;
 	}
@@ -177,11 +187,17 @@ public class Monstre extends Soldat implements java.io.Serializable {
 	}
 
 	@Override
+
 	public boolean seDeplace(Position newPos) {
 		return super.seDeplace(newPos);
 	}
 
-	/* Au chargement d'une partie, recompte le nombre de Monstre sur la Carte */
+	/**
+	 * Au chargement d'une partie, recompte le nombre de Monstre sur la Carte
+	 * 
+	 * @param carte
+	 *            la Carte de la partie
+	 */
 	public static void compteMonstre(Carte carte) {
 		int i, j;
 		Element e;

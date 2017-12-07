@@ -1,6 +1,6 @@
 package wargame;
 
-/*Represente une Position sur la carte */
+/**Represente une Position sur la carte */
 public class Position implements IConfig, java.io.Serializable {
 
 	private static final long serialVersionUID = 4128033442511717492L;
@@ -26,7 +26,7 @@ public class Position implements IConfig, java.io.Serializable {
 	public void setY(int y) {
 		this.y = y;
 	}
-
+/**@return les coordonnes de la Position*/
 	public String toString() {
 		return "(" + x + "," + y + ")";
 	}

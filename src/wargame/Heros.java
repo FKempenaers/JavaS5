@@ -1,63 +1,69 @@
 package wargame;
 
-/*La classe des Heros joues le joueur, herite de Soldat */
+/** La classe des Heros joues par le joueur, herite de Soldat */
 public class Heros extends Soldat implements java.io.Serializable {
 
 	private static final long serialVersionUID = 5476830968803461453L;
-	private final String NOM;
 	private final TypesH TYPE;
 	private static int nbHeros;
 	private static int nbHerosjoues;
 
-	public Heros(Carte carte, TypesH type, String nom, Position pos, int numero) {
+	public Heros(Carte carte, TypesH type, Position pos, int numero) {
 		super(carte, type.getPoints(), type.getPortee(), type.getPuissance(), type.getTir(), pos, numero);
-		NOM = nom;
 		TYPE = type;
 	}
 
 	public TypesH getType() {
 		return TYPE;
 	}
-	/* Retourne le nombre de Heros en vie */
+
+	/** @return le nombre de Heros en vie */
 	public static int getnbHeros() {
 		return nbHeros;
 	}
 
-	/* Retourne les infos du Heros */
+	/** @return les infos du Heros */
 	public String toString() {
 		String s = TYPE + super.toString();
 		return s;
 	}
 
+	/**
+	 * Soigne le Soldat s de 10 points de vie
+	 * @param s
+	 *            le Soldat a soigner
+	 */
 	public void soigner(Soldat s) {
-		if(this.aPortee(s)){
-			if(s.getPoints()+10 > s.getpointdeVieMax()) {
+		if (this.aPortee(s)) {
+			if (s.getPoints() + 10 > s.getpointdeVieMax()) {
 				s.setpointDeVie(s.getpointdeVieMax());
-			}
-			else {
-				s.setpointDeVie(s.getPoints()+10);
+			} else {
+				s.setpointDeVie(s.getPoints() + 10);
 			}
 		}
-		
+
 	}
-	/* Decremente le nombre de Heros en vie */
+
+	/** Decremente le nombre de Heros en vie */
 	public void decrementnbHeros() {
 		nbHeros--;
 	}
 
-	/* Initialise le nombre de Heros en vie au nombre prevu dans IConfig */
+	/** Initialise le nombre de Heros en vie au nombre prevu dans IConfig */
 	public static void initnbheros() {
 		nbHeros = IConfig.NB_HEROS;
 	}
 
-	/* Initialise le nombre de Heros joues a 0 */
+	/** Initialise le nombre de Heros joues a 0 */
 	public static void initnbherosjoues() {
 		nbHerosjoues = 0;
 	}
 
-	/*
+	/**
 	 * Incremente le nombre de Heros joue, retourne true si celui-ci a atteint le
 	 * nombre de Heros et false sinon
+	 * 
+	 * @return true si nbHerosjoues+1 == nbHeros et false sinon
 	 */
 	public boolean incrementherosj() {
 		nbHerosjoues += 1;
@@ -67,8 +73,11 @@ public class Heros extends Soldat implements java.io.Serializable {
 		return false;
 	}
 
-	/*
+	/**
 	 * Lors du chargement d'une partie, corrige les valeurs nbHeros et nbHerosJoues
+	 * 
+	 * @param carte
+	 *            la Carte de la partie
 	 */
 	public static void compteHeros(Carte carte) {
 		int i, j;

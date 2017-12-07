@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
+/**Represente le panneau de jeu*/
 public class PanneauJeu extends JPanel implements java.io.Serializable {
 
 	private static final long serialVersionUID = -1931270646955506724L;
@@ -55,7 +55,6 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 					Heros.compteHeros(carte);
 					Monstre.compteMonstre(carte);
 					repaint();
-					System.out.println("" + carte);
 				} catch (final java.io.IOException e) {
 					e.printStackTrace();
 				} catch (final ClassNotFoundException e) {
@@ -80,8 +79,6 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 					oos = new ObjectOutputStream(fichierOut);
 					oos.writeObject(carte);
 					oos.flush();
-
-					System.out.println("" + carte);
 				} catch (final java.io.IOException e) {
 					e.printStackTrace();
 				} finally {

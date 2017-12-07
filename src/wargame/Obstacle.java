@@ -1,9 +1,8 @@
 package wargame;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
-/*la classe qui represente les Obstacle */
+/** La classe qui represente les Obstacle */
 public class Obstacle extends Element implements IConfig, java.io.Serializable {
 
 	private static final long serialVersionUID = 3074872363153736231L;
@@ -26,11 +25,9 @@ public class Obstacle extends Element implements IConfig, java.io.Serializable {
 	}
 
 	private TypeObstacle TYPE;
-	private Position pos;
 
-	Obstacle(TypeObstacle type, Position pos) {
+	Obstacle(TypeObstacle type) {
 		TYPE = type;
-		this.pos = pos;
 	}
 
 	public Color getCouleur() {

@@ -4,9 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-import javax.swing.JTextArea;
-
-/*La classe des Soldat dont heritent les Heros et les Monstre */
+/** La classe des Soldat dont heritent les Heros et les Monstre */
 public abstract class Soldat extends Element implements ISoldat, java.io.Serializable {
 
 	private static final long serialVersionUID = 695359784352051420L;
@@ -30,7 +28,7 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 		this.numero = numero;
 	}
 
-	/* Retourne une String contenant les infos du Soldat */
+	/** @return une String contenant les infos du Soldat */
 	public String toString() {
 		String s = " vie : " + pointsDeVie + " Points de vie max : " + POINTS_DE_VIE_MAX + " portee : "
 				+ this.getPortee() + " puissance corps a corps : " + PUISSANCE + " puissance tir : " + TIR;
@@ -40,10 +38,12 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 	public int getpointdeVieMax() {
 		return POINTS_DE_VIE_MAX;
 	}
+
 	protected void setpointDeVie(int v) {
 		pointsDeVie = v;
 	}
-	/* Retourne true si le Soldat peut se deplacer, false sinon */
+
+	/** @return true si le Soldat peut se deplacer, false sinon */
 	public boolean getmove() {
 		return this.move;
 	}
@@ -65,7 +65,7 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 	}
 
 	@Override
-	/* Retourne true si le Soldat a joue ce tour et false sinon */
+	/** @return true si le Soldat a joue ce tour et false sinon */
 	public boolean getTour() {
 		return tour;
 	}
@@ -79,12 +79,15 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 		return PORTEE_VISUELLE;
 	}
 
-	@Override
-	/*
+	/**
 	 * Combat le Soldat soldat, si les deux Soldat sont adjacents on utilise les
 	 * degats corps a corps, sinon les degats de tir si le Soldat vise est survit a
 	 * l'attaque, il riposte avec une puissance divisee par deux. si les pointsDeVie
 	 * de l'un des Soldat atteignent 0, il meurt.
+	 * 
+	 * @param soldat
+	 *            le soldat à combattre
+	 * @return true si le combat a eu lieu, false sinon (ex portee insuffisante)
 	 */
 	public boolean combat(Soldat soldat) {
 		int d, puissancethis = 0, puissancesoldat = 0;
@@ -94,15 +97,15 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 			puissancesoldat = soldat.PUISSANCE;
 		} else {
 			if (aPortee(soldat)) {
-				puissancethis = this.TIR;	
-			}
-			else return false;
+				puissancethis = this.TIR;
+			} else
+				return false;
 			if (soldat.aPortee(this)) {
 				puissancesoldat = soldat.TIR;
-			}
-			else puissancesoldat = 0;
+			} else
+				puissancesoldat = 0;
 		}
-		
+
 		Random r = new Random();
 		d = r.nextInt(puissancethis + 1);
 		soldat.pointsDeVie -= d;
@@ -116,12 +119,12 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 			soldat.carte.mort(soldat);
 		}
 		this.tour = true;
-		
+
 		return true;
 
 	}
 
-	/* Affiche les infos du Soldat */
+	/** Affiche les infos du Soldat */
 	public void afficheinfo(Graphics g) {
 		g.setColor(Color.BLACK);
 		if (this instanceof Heros) {
@@ -131,10 +134,10 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 		}
 	}
 
-	/* Un soldat qui se repose recupere au max 20% de ses hp */
+	/** Un soldat qui se repose recupere au max 20% de ses hp */
 	public void repos() {
 		int valeur = (this.POINTS_DE_VIE_MAX * 20) / 100;
-		if(move == true) {
+		if (move == true) {
 			if (this.pointsDeVie + valeur > this.POINTS_DE_VIE_MAX)
 				this.pointsDeVie = this.POINTS_DE_VIE_MAX;
 			else
@@ -143,15 +146,19 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 		}
 	}
 
-	/*
+	/**
 	 * Le Soldat se deplace vers la Position newPos, retourne true si le deplacement
 	 * est un succes et false sinon
+	 * 
+	 * @param newPos
+	 *            la Position vers laquelle se deplacer
+	 * @return true si succes, false sinon
 	 */
 	public boolean seDeplace(Position newPos) {
 		return carte.deplaceSoldat(newPos, this);
 	}
 
-	/* Retourne true si le Soldat soldat est a portee de this et false sinon */
+	/** @return true si le Soldat soldat est a portee de this et false sinon */
 	public boolean aPortee(Soldat soldat) {
 		int portee = getPortee();
 		Position pos, posCible;
@@ -167,7 +174,7 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 		return false;
 	}
 
-	/* Retourne true si le Soldat soldat est adjacent a this et false sinon */
+	/** @return true si le Soldat soldat est adjacent a this et false sinon */
 	public boolean adjacent(Soldat soldat) {
 		int x = pos.getX();
 		int y = pos.getY();

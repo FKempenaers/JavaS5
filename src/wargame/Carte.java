@@ -2,18 +2,18 @@ package wargame;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.io.Serializable;
 import java.util.Random;
 
 import wargame.Obstacle.TypeObstacle;
 
-public class Carte implements ICarte, IConfig, java.io.Serializable{
+/** Represente la Carte du jeu */
+public class Carte implements ICarte, IConfig, java.io.Serializable {
 
 	private static final long serialVersionUID = 5937244890881069262L;
 	private Element[][] carte;
 	private boolean finjeu;
 
-	/*
+	/**
 	 * la carte est un tableau d'Element (Obstacle,Soldat ou null si case vide),
 	 * chaque Element est place dans la case qui correspond a sa Position finjeu
 	 * vaut false quand la partie est en cours, true quand elle est terminee
@@ -28,8 +28,8 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 		return finjeu;
 	}
 
-	/*
-	 * Initialise la carte Les cases sont d'abord mises a null. Puis on ajoute des
+	/**
+	 * Initialise la carte. Les cases sont d'abord mises a null. Puis on ajoute des
 	 * Heros dans un carre de 5x5 dans le coin inferieur droit de la carte tant que
 	 * le nombre voulu n'est pas atteint. De meme pour les Monstres dans le coin
 	 * superieur gauche. Les Obstacles sont ensuite ajoutes sur toute la carte. Les
@@ -48,31 +48,39 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 			do {
 				p = trouvePositionVide();
 			} while (p.getX() < LARGEUR_CARTE - 5 || p.getY() < HAUTEUR_CARTE - 5);
-			setElement(new Heros(this, ISoldat.TypesH.getTypeHAlea(), "HerosAuPif", p, heros + 1), p.getX(), p.getY());
+			setElement(new Heros(this, ISoldat.TypesH.getTypeHAlea(), p, heros + 1), p.getX(), p.getY());
 		}
 		for (monstres = 0; monstres < IConfig.NB_MONSTRES; monstres++) {
 			do {
 				p = trouvePositionVide();
 			} while (p.getX() > 5 || p.getY() > 5);
-			setElement(new Monstre(this, ISoldat.TypesM.getTypeMAlea(), "MonstreAuPif", p, monstres + 1), p.getX(),
-					p.getY());
+			setElement(new Monstre(this, ISoldat.TypesM.getTypeMAlea(), p, monstres + 1), p.getX(), p.getY());
 		}
 		for (obstacles = 0; obstacles < IConfig.NB_OBSTACLES; obstacles++) {
 			p = trouvePositionVide();
-			setElement(new Obstacle(TypeObstacle.getObstacleAlea(), p), p.getX(), p.getY());
+			setElement(new Obstacle(TypeObstacle.getObstacleAlea()), p.getX(), p.getY());
 		}
 		Heros.initnbheros();
 		Monstre.initnbMonstres();
 	}
 
-	@Override
-	/* retourne l'Element qui est a la Position passee en parametre */
+	/**
+	 * retourne l'Element qui est a la Position passee en parametre
+	 * 
+	 * @param pos
+	 *            la Position de l'Element a renvoyer
+	 * 
+	 * @return l'Element situe a la Position pos
+	 */
 	public Element getElement(Position pos) {
 		return carte[pos.getX()][pos.getY()];
 	}
 
-	@Override
-	/* retourne une Position correspondant a une case vide trouvee aleatoirement */
+	/**
+	 * retourne une Position correspondant a une case vide trouvee aleatoirement
+	 * 
+	 * @return une nouvelle Position correspondant a une case vide
+	 */
 	public Position trouvePositionVide() {
 		int x, y;
 		x = y = 0;
@@ -84,11 +92,16 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 		return new Position(x, y);
 	}
 
-	@Override
-	/*
+	/**
 	 * retourne une Position correspondant a une case vide autour de la Position
 	 * passee en parametre, retourne null si toutes les Position adjacentes sont
 	 * occupees
+	 * 
+	 * @param pos
+	 *            la Position autour de laquelle on cherche une Position vide
+	 * 
+	 * @return nouvelle Position correspondant a une case vide ou null si toutes les
+	 *         cases adjacentes a pos sont occupees
 	 */
 	public Position trouvePositionVide(Position pos) {
 		int x = pos.getX();
@@ -102,11 +115,13 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 		return null;
 	}
 
-	@Override
-	/*
+	/**
 	 * retourne un Heros trouve aleatoirement sur la carte, la fonction a 2 fois le
 	 * nombre de cases de la carte tentatives pour trouver un Heros, elle retourne
 	 * null si elle a epuise le nombre de tentatives.
+	 * 
+	 * @return un Heros trouve au hasard ou null si pas de Heros trouve apres
+	 *         2*HAUTEUR_CARTE*LARGEUR_CARTE tentatives
 	 */
 	public Heros trouveHeros() {
 		int compteur = 2 * LARGEUR_CARTE * HAUTEUR_CARTE;
@@ -125,29 +140,18 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 		return (Heros) e;
 	}
 
-	@Override
-	/*
-	 * retourne un Heros adjacent a la Position passee en parametre et null s'il n'y
-	 * en a pas
-	 */
-	public Heros trouveHeros(Position pos) {
-		int x = pos.getX();
-		int y = pos.getY();
-		for (int i = x - 1; (i <= x + 1) && (i < LARGEUR_CARTE); i++) {
-			for (int j = y - 1; (j <= y + 1) && (j < HAUTEUR_CARTE); j++) {
-				if ((i != x && j != y) && (carte[i][j] instanceof Heros))
-					return (Heros) carte[i][j];
-			}
-		}
-		return null;
-
-	}
-
-	@Override
-	/*
+	/**
 	 * Deplace le Soldat soldat vers la Position pos sous reserve qu'elle soit vide
-	 * (retourne false sinon) Les cases de carte correspondant � l'ancienne Position
-	 * et � la nouvelle sont mises � jour tout comme la Position de soldat.
+	 * (retourne false sinon) Les cases de carte correspondant a l'ancienne Position
+	 * et a la nouvelle sont mises a jour tout comme la Position de soldat.
+	 * 
+	 * @param pos
+	 *            la nouvelle Position du Soldat soldat
+	 * 
+	 * @param soldat
+	 *            le Soldat a deplacer
+	 * 
+	 * @return true si le deplacement reussi et false sinon
 	 */
 	public boolean deplaceSoldat(Position pos, Soldat soldat) {
 		int i, j, x, y;
@@ -169,12 +173,14 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 		return false;
 	}
 
-	@Override
-	/*
+	/**
 	 * gere la mort du Soldat perso : sa case et son pointeur passent a null. On
 	 * decremente nbMonstres ou nbHeros selon la classe de perso, si le nombre de
 	 * Monstre ou de Heros atteint 0, on passe finjeu a true pour declencher la fin
 	 * de la partie.
+	 * 
+	 * @param perso
+	 *            le personnage a faire mourir
 	 */
 	public void mort(Soldat perso) {
 		carte[perso.getPosition().getX()][perso.getPosition().getY()] = null;
@@ -192,13 +198,17 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 		perso = null;
 	}
 
-	/* Dessin des elements de la carte */
+	/**
+	 * Dessin des elements de la carte
+	 * 
+	 * @param g
+	 *            un object Graphics
+	 */
 	public void toutDessiner(Graphics g) {
 
-		// TODO Auto-generated method stub
 		int[][] carte_b;
-		carte_b = new int[LARGEUR_CARTE+1][HAUTEUR_CARTE+1];
-		int i, j,e,y,p,e1,y1;
+		carte_b = new int[LARGEUR_CARTE + 1][HAUTEUR_CARTE + 1];
+		int i, j, e, y, p, e1, y1;
 		char num;
 		String s;
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
@@ -210,25 +220,25 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
 			for (i = 0; i < LARGEUR_CARTE; i++) {
 				if (carte[i][j] instanceof Heros) {
-					p = ((Soldat)carte[i][j]).getPortee();
-					if(j-p < 0) {
+					p = ((Soldat) carte[i][j]).getPortee();
+					if (j - p < 0) {
 						e = 0;
-					}
-					else e = j-p;
-					if(j+p >HAUTEUR_CARTE) {
+					} else
+						e = j - p;
+					if (j + p > HAUTEUR_CARTE) {
 						e1 = HAUTEUR_CARTE;
-					}
-					else e1 = j+p;
-					while (e < e1+1) {
-						if(i-p < 0) {
+					} else
+						e1 = j + p;
+					while (e < e1 + 1) {
+						if (i - p < 0) {
 							y = 0;
-						}
-						else y = i-p;
-						if(i+p > LARGEUR_CARTE) {
+						} else
+							y = i - p;
+						if (i + p > LARGEUR_CARTE) {
 							y1 = LARGEUR_CARTE;
-						}
-						else y1 = i+p;
-						while (y < y1+1) {
+						} else
+							y1 = i + p;
+						while (y < y1 + 1) {
 							carte_b[y][e] = 1;
 							y++;
 						}
@@ -240,10 +250,9 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
 			for (i = 0; i < LARGEUR_CARTE; i++) {
 				/* couleur de la case suivant type d'element */
-				if(carte_b[i][j] == 0) {
+				if (carte_b[i][j] == 0) {
 					g.setColor(COULEUR_INCONNU);
-				}
-				else {
+				} else {
 					if (carte[i][j] == null) {
 						g.setColor(COULEUR_VIDE);
 					} else {
@@ -292,12 +301,23 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 			g.drawLine(0, j * NB_PIX_CASE, LARGEUR_CARTE * NB_PIX_CASE, j * NB_PIX_CASE);
 	}
 
-	/* Place un element dans la case passee en param */
+	/**
+	 * Place un element dans la case passee en param
+	 * 
+	 * @param e
+	 *            l'Element a placer
+	 * 
+	 * @param x
+	 *            l'abscisse de la case
+	 * 
+	 * @param y
+	 *            l'ordonnee de la case
+	 */
 	public void setElement(Element e, int x, int y) {
 		carte[x][y] = e;
 	}
 
-	/*
+	/**
 	 * Parcourt la carte, si on trouve un Monstre qui n'a pas joue son tour, il joue
 	 * son tour
 	 */
@@ -316,7 +336,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 
 	}
 
-	/* Parcourt la carte, les Heros n'ayant pas joue leur tour se reposent */
+	/** Parcourt la carte, les Heros n'ayant pas joue leur tour se reposent */
 	public void findetourrepos() {
 		int i, j;
 		for (j = 0; j < HAUTEUR_CARTE; j++) {
@@ -330,9 +350,9 @@ public class Carte implements ICarte, IConfig, java.io.Serializable{
 		}
 	}
 
-	/*
+	/**
 	 * Parcourt la carte, les Soldat peuvent a nouveau jouer un tour et se deplacer,
-	 * le nombre de Heros ayant joue est remis � 0
+	 * le nombre de Heros ayant joue est remis a 0
 	 */
 	public void resetTour() {
 		int i, j;
