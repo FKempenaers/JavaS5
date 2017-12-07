@@ -15,6 +15,9 @@ public class Heros extends Soldat implements java.io.Serializable {
 		TYPE = type;
 	}
 
+	public TypesH getType() {
+		return TYPE;
+	}
 	/* Retourne le nombre de Heros en vie */
 	public static int getnbHeros() {
 		return nbHeros;
@@ -26,6 +29,17 @@ public class Heros extends Soldat implements java.io.Serializable {
 		return s;
 	}
 
+	public void soigner(Soldat s) {
+		if(this.aPortee(s)){
+			if(s.getPoints()+10 > s.getpointdeVieMax()) {
+				s.setpointDeVie(s.getpointdeVieMax());
+			}
+			else {
+				s.setpointDeVie(s.getPoints()+10);
+			}
+		}
+		
+	}
 	/* Decremente le nombre de Heros en vie */
 	public void decrementnbHeros() {
 		nbHeros--;

@@ -37,6 +37,12 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 		return s;
 	}
 
+	public int getpointdeVieMax() {
+		return POINTS_DE_VIE_MAX;
+	}
+	protected void setpointDeVie(int v) {
+		pointsDeVie = v;
+	}
 	/* Retourne true si le Soldat peut se deplacer, false sinon */
 	public boolean getmove() {
 		return this.move;
@@ -128,11 +134,13 @@ public abstract class Soldat extends Element implements ISoldat, java.io.Seriali
 	/* Un soldat qui se repose recupere au max 20% de ses hp */
 	public void repos() {
 		int valeur = (this.POINTS_DE_VIE_MAX * 20) / 100;
-		if (this.pointsDeVie + valeur > this.POINTS_DE_VIE_MAX)
-			this.pointsDeVie = this.POINTS_DE_VIE_MAX;
-		else
-			this.pointsDeVie += valeur;
-		this.tour = true;
+		if(move == true) {
+			if (this.pointsDeVie + valeur > this.POINTS_DE_VIE_MAX)
+				this.pointsDeVie = this.POINTS_DE_VIE_MAX;
+			else
+				this.pointsDeVie += valeur;
+			this.tour = true;
+		}
 	}
 
 	/*

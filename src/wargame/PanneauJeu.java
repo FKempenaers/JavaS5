@@ -88,6 +88,9 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 					/* Si on a deja selectionne un Heros et qu'on vient de faire un clic droit */
 					if (heros_clic && SwingUtilities.isRightMouseButton(e)) {
 						/* Si l'element selectionne est un Monstre */
+						if(((Heros)eh).getType() == ISoldat.TypesH.MAGICIEN && el instanceof Heros) {
+							((Heros)eh).soigner((Soldat)el);
+						}
 						if (el instanceof Monstre) {
 							/* On le combat et signale que le Heros a joue son tour */
 							if(((Soldat) eh).combat((Soldat) el)) {
@@ -125,11 +128,11 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 					else if (heros_clic && ((Soldat) eh).getmove()) {
 						if (carte.deplaceSoldat(pos, (Soldat) eh)) {
 							((Soldat) eh).setmove(false);
-							((Soldat) eh).tour = true;
+							/*((Soldat) eh).tour = true;
 							if (((Heros) eh).incrementherosj()) {
 								carte.jouerMonstres();
 								carte.resetTour();
-							}
+							}*/
 						}
 						heros_clic = false;
 					} else if (el instanceof Monstre) {
