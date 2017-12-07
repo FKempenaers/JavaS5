@@ -1,8 +1,9 @@
 package wargame;
 
 /*La classe des Heros joues le joueur, herite de Soldat */
-public class Heros extends Soldat {
+public class Heros extends Soldat implements java.io.Serializable {
 
+	private static final long serialVersionUID = 5476830968803461453L;
 	private final String NOM;
 	private final TypesH TYPE;
 	private static int nbHeros;

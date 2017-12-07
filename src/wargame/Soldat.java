@@ -7,8 +7,9 @@ import java.util.Random;
 import javax.swing.JTextArea;
 
 /*La classe des Soldat dont heritent les Heros et les Monstre */
-public abstract class Soldat extends Element implements ISoldat {
+public abstract class Soldat extends Element implements ISoldat, java.io.Serializable {
 
+	private static final long serialVersionUID = 695359784352051420L;
 	private final int POINTS_DE_VIE_MAX, PUISSANCE, TIR, PORTEE_VISUELLE;
 	private int pointsDeVie;
 	private Position pos;

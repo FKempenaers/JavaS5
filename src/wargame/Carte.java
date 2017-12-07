@@ -6,7 +6,9 @@ import java.util.Random;
 
 import wargame.Obstacle.TypeObstacle;
 
-public class Carte implements ICarte, IConfig {
+public class Carte implements ICarte, IConfig, java.io.Serializable{
+
+	private static final long serialVersionUID = 5937244890881069262L;
 	private Element[][] carte;
 	private boolean finjeu;
 

@@ -13,7 +13,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class PanneauJeu extends JPanel {
+public class PanneauJeu extends JPanel implements java.io.Serializable {
+
+	private static final long serialVersionUID = -1931270646955506724L;
 	private Element el, eh;
 	private Position pos, posh;
 	private Carte carte;
