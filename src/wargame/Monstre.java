@@ -1,8 +1,9 @@
 package wargame;
 
 /*Les Monstre qui heritent de Soldat, se battent contre les Heros */
-public class Monstre extends Soldat {
+public class Monstre extends Soldat implements java.io.Serializable {
 
+	private static final long serialVersionUID = 4662812023001249671L;
 	private final String NOM;
 	private final TypesM TYPE;
 	private static Heros target;
@@ -136,7 +137,7 @@ public class Monstre extends Soldat {
 		super.tour = true;
 	}
 
-	/*Renvoie un Heros a portee du Monstre et null s'il n'y en a pas */
+	/* Renvoie un Heros a portee du Monstre et null s'il n'y en a pas */
 	public Heros trouveCible() {
 		int portee = getPortee();
 		Position pos, npos;
@@ -159,11 +160,13 @@ public class Monstre extends Soldat {
 		}
 		return cible;
 	}
-/*Decremente le nombre de Monstre en vie */
+
+	/* Decremente le nombre de Monstre en vie */
 	public void decrementnbMonstres() {
 		nbMonstres--;
 	}
-/*Initialise le nombre de Monstre en vie a la valeur prevue dans IConfig */
+
+	/* Initialise le nombre de Monstre en vie a la valeur prevue dans IConfig */
 	public static void initnbMonstres() {
 		nbMonstres = IConfig.NB_MONSTRES;
 	}
