@@ -32,7 +32,7 @@ public abstract class Soldat extends Element implements ISoldat {
 	/* Retourne une String contenant les infos du Soldat */
 	public String toString() {
 		String s = " vie : " + pointsDeVie + " Points de vie max : " + POINTS_DE_VIE_MAX + " portee : "
-				+ this.getPortee() + " puissance corps a� corps : " + PUISSANCE + " puissance tir : " + TIR;
+				+ this.getPortee() + " puissance corps a corps : " + PUISSANCE + " puissance tir : " + TIR;
 		return s;
 	}
 

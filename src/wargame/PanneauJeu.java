@@ -21,6 +21,8 @@ public class PanneauJeu extends JPanel {
 	JFrame frame = new JFrame();
 	private JButton b1 = new JButton("Fin de tour");
 	private JButton b2 = new JButton("Recommencer");
+	private JButton b3 = new JButton("Sauvegarder");
+	private JButton b4 = new JButton("Charger partie");
 	// private JPanel s1 = new JPanel();
 
 	public PanneauJeu() {
@@ -30,9 +32,25 @@ public class PanneauJeu extends JPanel {
 		pos = new Position(0, 0);
 		posh = new Position(0, 0);
 		carte = new Carte();
+		this.setLayout(null);
 
-		b2.setPreferredSize(new Dimension(150, 60));
-		add(b2, BorderLayout.EAST);
+		b4.setBounds(IConfig.NB_PIX_CASE*IConfig.LARGEUR_CARTE+20,140, 150, 60);
+		add(b4);
+		b4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}
+		});
+		b3.setBounds(IConfig.NB_PIX_CASE*IConfig.LARGEUR_CARTE+20,210, 150, 60);
+		add(b3);
+		b4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}
+		});
+		
+		b2.setBounds(IConfig.NB_PIX_CASE*IConfig.LARGEUR_CARTE+20,0, 150, 60);
+		add(b2);
 		/* Le bouton Recommencer cree une nouvelle carte */
 		b2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -41,7 +59,7 @@ public class PanneauJeu extends JPanel {
 			}
 		});
 		repaint();
-
+		b1.setBounds(IConfig.NB_PIX_CASE*IConfig.LARGEUR_CARTE+20,70, 150, 60);
 		b1.setPreferredSize(new Dimension(40, 60));
 		add(b1, BorderLayout.SOUTH);
 		/*

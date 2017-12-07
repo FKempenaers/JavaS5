@@ -2,6 +2,7 @@ package wargame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.Random;
 
 import wargame.Obstacle.TypeObstacle;
@@ -272,7 +273,7 @@ public class Carte implements ICarte, IConfig {
 						s = Character.toString(num);
 						g.drawString(s, i * NB_PIX_CASE + NB_PIX_CASE / 2, j * NB_PIX_CASE + NB_PIX_CASE / 2);
 					}
-					if (carte[i][j] instanceof Monstre) {
+					if (carte[i][j] instanceof Monstre && carte_b[i][j] == 1) {
 						g.setColor(Color.white);
 						s = Integer.toString(((Soldat) carte[i][j]).getNum());
 						g.drawString(s, i * NB_PIX_CASE + NB_PIX_CASE / 2, j * NB_PIX_CASE + NB_PIX_CASE / 2);

@@ -16,6 +16,7 @@ public class FenetreJeu implements IConfig {
 		frame.setPreferredSize(new Dimension(NB_PIX_CASE * (LARGEUR_CARTE + 5), NB_PIX_CASE * (HAUTEUR_CARTE + 5)));
 
 		JPanel pan = new JPanel();
+		//pan.setLayout(null);
 		pan.setBackground(Color.GRAY);
 
 		PanneauJeu panneau = new PanneauJeu();
