@@ -260,6 +260,12 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 							/* Les Heros qui ont joue ont une couleur differente */
 							if (((Heros) carte[i][j]).getTour())
 								g.setColor(COULEUR_HEROS_DEJA_JOUE);
+							else if(!((Soldat) carte[i][j]).getmove()){
+								g.setColor(COULEUR_HEROS_DEJA_BOUGE);
+							}
+							else if(((Heros) carte[i][j]).getSelect()){
+								g.setColor(COULEUR_HEROS_SELECTIONNE);
+							}
 							else
 								g.setColor(COULEUR_HEROS);
 						}
@@ -364,6 +370,9 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 					s = (Soldat) carte[i][j];
 					s.tour = false;
 					s.setmove(true);
+					/*if (carte[i][j] instanceof Heros){
+						((Heros)s).setSelect(false);
+					}*/
 				}
 			}
 		}

@@ -7,12 +7,19 @@ public class Heros extends Soldat implements java.io.Serializable {
 	private final TypesH TYPE;
 	private static int nbHeros;
 	private static int nbHerosjoues;
+	private boolean select;
 
 	public Heros(Carte carte, TypesH type, Position pos, int numero) {
 		super(carte, type.getPoints(), type.getPortee(), type.getPuissance(), type.getTir(), pos, numero);
+		select = false;
 		TYPE = type;
 	}
-
+	public boolean getSelect(){
+		return select;
+	}
+	public void setSelect(boolean b){
+		select = b;
+	}
 	public TypesH getType() {
 		return TYPE;
 	}

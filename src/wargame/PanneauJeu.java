@@ -133,6 +133,17 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 						/* Si l'element selectionne est un Monstre */
 						if(((Heros)eh).getType() == ISoldat.TypesH.MAGICIEN && el instanceof Heros) {
 							((Heros)eh).soigner((Soldat)el);
+							((Soldat) eh).tour = true;
+							/*
+							 * Si apres incrementation du nombre de Heros ayant joue ils ont tous fait leur
+							 * tour On fait jouer les Monstres On prepare le prochain tour
+							 */
+							if (((Heros) eh).incrementherosj()) {
+								carte.jouerMonstres();
+								carte.resetTour();
+							}
+							heros_clic = false;
+							((Heros) eh).setSelect(false);
 						}
 						if (el instanceof Monstre) {
 							/* On le combat et signale que le Heros a joue son tour */
@@ -147,6 +158,7 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 									carte.resetTour();
 								}
 								heros_clic = false;
+								
 							}
 						}
 					}
@@ -157,6 +169,10 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 					if (el instanceof Heros) {
 						if (((Soldat) el).tour == false) {
 							heros_clic = true;
+							if(eh instanceof Heros){
+								((Heros) eh).setSelect(false);
+							}
+							((Heros) el).setSelect(true);
 							posh.setX(pos.getX());
 							posh.setY(pos.getY());
 							eh = el;
@@ -178,6 +194,7 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 							}*/
 						}
 						heros_clic = false;
+						((Heros) eh).setSelect(false);
 					} else if (el instanceof Monstre) {
 						monstre_clic = true;
 						eh = el;
