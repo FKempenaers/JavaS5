@@ -251,7 +251,7 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 			for (i = 0; i < LARGEUR_CARTE; i++) {
 				/* couleur de la case suivant type d'element */
 				if (carte_b[i][j] == 0) {
-					g.setColor(COULEUR_INCONNU);
+					g.setColor(COULEUR_BROUILLARD);
 				} else {
 					if (carte[i][j] == null) {
 						g.setColor(COULEUR_VIDE);
@@ -274,10 +274,12 @@ public class Carte implements ICarte, IConfig, java.io.Serializable {
 						if (carte[i][j] instanceof Obstacle)
 							g.setColor(((Obstacle) carte[i][j]).getCouleur());
 					}
-					/* dessin de la case */
-					g.fillRect(i * NB_PIX_CASE, j * NB_PIX_CASE, NB_PIX_CASE, NB_PIX_CASE);
+					
 				}
+				/* dessin de la case */
+				g.fillRect(i * NB_PIX_CASE, j * NB_PIX_CASE, NB_PIX_CASE, NB_PIX_CASE);
 			}
+				
 		}
 
 		/* Ajout des numeros des Monstre et des lettres des Heros */
