@@ -158,6 +158,7 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 									carte.resetTour();
 								}
 								heros_clic = false;
+								((Heros) eh).setSelect(false);
 								
 							}
 						}
@@ -201,6 +202,9 @@ public class PanneauJeu extends JPanel implements java.io.Serializable {
 					} else {
 						monstre_clic = false;
 						heros_clic = false;
+						if(eh instanceof Heros){
+							((Heros) eh).setSelect(false);
+						}
 					}
 					repaint();
 				}
